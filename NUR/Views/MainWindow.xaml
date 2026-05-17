@@ -1,0 +1,117 @@
+﻿<Window
+    x:Class="NUR.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:NUR.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Main"
+    Width="1200"
+    Height="800"
+    Loaded="MainWindow_Loaded"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <Grid Background="{DynamicResource GridBackground}" MouseDown="Grid_MouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.7*" />
+            <RowDefinition Height="9.3*" />
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
+                Grid.Column="0"
+                Margin="10"
+                Orientation="Horizontal">
+                <Label
+                    Margin="10,0,20,0"
+                    Content="NUR"
+                    FontSize="20"
+                    FontWeight="ExtraBold"
+                    Foreground="#FDDD2D" />
+
+                <Button
+                    Width="110"
+                    Content="⋮ Каталог"
+                    FontSize="15"
+                    HorizontalAlignment="Left"
+                    FontWeight="DemiBold"
+                    Style="{StaticResource ButtonRoundStyle}" />
+                <Border
+                    Margin="20,0,20,0"
+                    Background="#1F2020"
+                    CornerRadius="10">
+                    <StackPanel Orientation="Horizontal">
+                        <Image
+                            Width="15"
+                            Height="15"
+                            
+                            Margin="10,5"
+                            Source="/Assets/images/search.png" />
+                        <TextBox
+                            x:Name="SearchBox"
+                            Width="200"
+                            VerticalContentAlignment="Center"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            CaretBrush="White"
+                            FontSize="15"
+                            Foreground="White"
+                            TextChanged="SearchBox_TextChanged"/>
+                    </StackPanel>
+                </Border>
+
+                <StackPanel
+                    Margin="0,0,20,0"
+                    Button.Click="MenuButton_Click"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="110"
+                        Content="Главная"
+                        FontSize="15"
+                        FontWeight="DemiBold"
+                        Foreground="White"
+                        Style="{StaticResource ButtonRoundStyle}" />
+                   
+                    <Button
+                        Width="110"
+                        Click="videoPlayer_Click"
+                        Content="Видеоплеер"
+                        FontSize="15"
+                        FontWeight="DemiBold"
+                        Foreground="White"
+                        Style="{StaticResource ButtonRoundStyle}" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button Content="➖" Style="{StaticResource MinimizeButtonRoundStyle}" />
+                <Button
+                    Click="Close_Click"
+                    Content="✖"
+                    Style="{StaticResource CloseButtonRoundStyle}" />
+            </StackPanel>
+        </Grid>
+
+
+
+        <Grid Grid.Row="1">
+            <local:HomeForm x:Name="homeForm" Visibility="Visible" />
+            <local:VideoForm x:Name="videoForm" Visibility="Hidden" />
+            <local:SettingsForm x:Name="settingsForm" Visibility="Hidden" />
+            <local:MovieDetailForm x:Name="movieDetailForm" Visibility="Hidden" />
+        </Grid>
+
+    </Grid>
+</Window>

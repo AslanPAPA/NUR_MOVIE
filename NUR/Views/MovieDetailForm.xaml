@@ -1,0 +1,159 @@
+﻿<UserControl
+    x:Class="NUR.Views.MovieDetailForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:NUR.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="800"
+    d:DesignWidth="1000"
+    Background="#1A1A1B"
+    mc:Ignorable="d">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Grid Height="500">
+                    <Image Source="{Binding Poster}" Stretch="UniformToFill">
+                        <Image.Effect>
+                            <BlurEffect Radius="30" />
+                        </Image.Effect>
+                    </Image>
+
+                    <Border Background="#AA000000" />
+
+                    <StackPanel
+                        Margin="50,0,50,40"
+                        VerticalAlignment="Bottom"
+                        Orientation="Horizontal">
+                        <Border
+                            Width="220"
+                            Height="330"
+                            BorderBrush="#333"
+                            BorderThickness="1"
+                            ClipToBounds="True"
+                            CornerRadius="0">
+                            <Image Source="{Binding Poster}" Stretch="UniformToFill" />
+                        </Border>
+
+                        <StackPanel Margin="30,0,0,0" VerticalAlignment="Bottom">
+                            <TextBlock
+                                FontFamily="Arial Black"
+                                FontSize="42"
+                                Foreground="#FFFFFF"
+                                Text="{Binding Title}"
+                                TextWrapping="Wrap" />
+
+                            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                <TextBlock
+                                    FontSize="20"
+                                    Foreground="White"
+                                    Opacity="0.7"
+                                    Text="{Binding Year}" />
+                                <TextBlock
+                                    Margin="10,0"
+                                    FontSize="20"
+                                    Foreground="White"
+                                    Opacity="0.5"
+                                    Text="•" />
+                                <TextBlock
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    Foreground="#FFFFFF"
+                                    Text="{Binding Age_Limit}" />
+                                <TextBlock
+                                    Margin="10,0"
+                                    FontSize="20"
+                                    Foreground="White"
+                                    Opacity="0.5"
+                                    Text="•" />
+                                <TextBlock
+                                    FontSize="20"
+                                    Foreground="White"
+                                    Opacity="0.7"
+                                    Text="{Binding Country}" />
+                            </StackPanel>
+
+                            <Button
+                                x:Name="BtnWatch"
+                                Width="200"
+                                Height="50"
+                                Margin="0,30,0,0"
+                                HorizontalAlignment="Left"
+                                Background="#FFD700"
+                                Content="СМОТРЕТЬ"
+                                Cursor="Hand"
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Foreground="Black"
+                                Click="BtnWatch_Click"
+                                Style="{StaticResource WatchBtnStyle}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Margin="50,30,50,50">
+                    <TextBlock
+                        Margin="0,0,0,15"
+                        FontSize="22"
+                        FontWeight="Medium"
+                        Foreground="#FFD700"
+                        Text="ОПИСАНИЕ" />
+                    <TextBlock
+                        FontSize="16"
+                        Foreground="White"
+                        LineHeight="26"
+                        Opacity="0.9"
+                        Text="{Binding Description}"
+                        TextWrapping="Wrap" />
+
+                    <Grid Margin="0,30,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock
+                                Margin="0,5"
+                                FontSize="14"
+                                Foreground="Gray"
+                                Text="Режиссер:" />
+                            <TextBlock
+                                Margin="0,5"
+                                FontSize="14"
+                                Foreground="Gray"
+                                Text="Актеры:" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock
+                                Margin="0,5"
+                                FontSize="14"
+                                Foreground="White"
+                                Text="{Binding Director}" />
+                            <TextBlock
+                                Margin="0,5"
+                                FontSize="14"
+                                Foreground="White"
+                                Text="{Binding ActorsString}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button
+            Style="{StaticResource BackButton}"
+            Margin="20"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            BorderThickness="0"
+            Content="❮ НАЗАД"
+            Cursor="Hand"
+            FontSize="14"
+            Foreground="White"
+            Click="BtnBack_Click"/>
+    </Grid>
+</UserControl>

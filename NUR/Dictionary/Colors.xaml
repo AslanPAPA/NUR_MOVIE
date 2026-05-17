@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="GridBackground" Color="#0F0F10" />
+    <SolidColorBrush x:Key="ButtonBackgroundBase" Color="#1F2020" />
+
+    <SolidColorBrush x:Key="ButtonBackgroundHover" Color="#4D808080" />
+
+    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#4DA9A9A9" />
+
+    <SolidColorBrush x:Key="ButtonBackgroundCloseHover" Color="#4DFF4C4F" />
+
+</ResourceDictionary>

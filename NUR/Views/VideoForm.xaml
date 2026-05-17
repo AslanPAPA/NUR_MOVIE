@@ -1,0 +1,64 @@
+﻿<UserControl
+    x:Class="NUR.Views.VideoForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="744" d:DesignWidth="1200">
+
+    <Grid Background="Black">
+        <MediaElement x:Name="mediaPlayer" 
+                      LoadedBehavior="Manual" 
+                      UnloadedBehavior="Stop"
+                      Stretch="Uniform"/>
+
+        <Grid x:Name="navigation" VerticalAlignment="Bottom" Background="#AA1A1A1B" Height="100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Slider
+                x:Name="videoTimeline"
+                Grid.Row="0"
+                Margin="15,10,15,0"
+                Maximum="1"
+                Style="{StaticResource VideoSliderStyle}"
+                PreviewMouseDown="videoTimeline_PreviewMouseDown"
+                PreviewMouseUp="videoTimeline_PreviewMouseUp" />
+
+            <Grid Grid.Row="1" Margin="20,0,20,10">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button x:Name="BtnPlayPause" 
+                            Width="35" Height="35"
+                            Content="▶" 
+                            Style="{StaticResource PlayerControlButtonStyle}" 
+                            Click="BtnPlayPause_Click" />
+
+                    <Button x:Name="BtnMuteUnmute" 
+                            Width="35" Height="35"
+                            Content="🔊" 
+                            Margin="15,0" 
+                            Style="{StaticResource PlayerControlButtonStyle}" 
+                            Click="BtnMute_Click" />
+
+                    <TextBlock x:Name="TimeStatus" 
+                               VerticalAlignment="Center"
+                               Foreground="White" 
+                               FontWeight="Bold" 
+                               FontSize="15"
+                               Text="00:00 / 00:00" />
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                    <Button x:Name="BtnFullScreen" 
+                            Width="35" Height="35"
+                            Content="⛶" 
+                            Style="{StaticResource PlayerControlButtonStyle}" 
+                            Click="BtnFullscreen_Click" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
