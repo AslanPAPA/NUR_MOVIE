@@ -128,7 +128,7 @@ namespace NUR.Views
         public void StartPlayer(string videoUrl)
         {
             ShowForm(videoForm);
-            videoForm.PlayMovie(videoUrl);
+            videoForm.mediaStart(videoUrl);
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)

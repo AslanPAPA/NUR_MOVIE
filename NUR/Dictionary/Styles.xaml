@@ -113,7 +113,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="WatchBtnStyle" BasedOn="{StaticResource ButtonRoundStyle}" TargetType="Button">
+    <Style
+        x:Key="WatchBtnStyle"
+        BasedOn="{StaticResource ButtonRoundStyle}"
+        TargetType="Button">
         <Setter Property="Background" Value="#FFD700" />
         <Setter Property="Foreground" Value="#000000" />
 
@@ -121,14 +124,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border
-                    x:Name="border"
-                    Background="{TemplateBinding Background}"
-                    BorderThickness="0"
-                    CornerRadius="25">
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="0"
+                        CornerRadius="25">
                         <ContentPresenter
-                        x:Name="contentPresenter"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center" />
+                            x:Name="contentPresenter"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -143,7 +146,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="BackButton" BasedOn="{StaticResource ButtonRoundStyle}" TargetType="Button">
+    <Style
+        x:Key="BackButton"
+        BasedOn="{StaticResource ButtonRoundStyle}"
+        TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#AAAAAA" />
         <Setter Property="FontSize" Value="14" />
@@ -152,10 +158,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
+                    <Border
+                        x:Name="border"
                         Background="{TemplateBinding Background}"
-                        CornerRadius="8"
-                        BorderThickness="0">
+                        BorderThickness="0"
+                        CornerRadius="8">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
 
@@ -173,7 +180,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="PlayerControlButtonStyle" BasedOn="{StaticResource ButtonRoundStyle}" TargetType="Button">
+    <Style
+        x:Key="PlayerControlButtonStyle"
+        BasedOn="{StaticResource ButtonRoundStyle}"
+        TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#AAAAAA" />
         <Setter Property="FontSize" Value="14" />
@@ -182,10 +192,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                     Background="{TemplateBinding Background}"
-                     CornerRadius="8"
-                     BorderThickness="0">
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="0"
+                        CornerRadius="8">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
 
@@ -206,25 +217,27 @@
 
 
     <Style x:Key="OpacityHoverStyle" TargetType="Grid">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Opacity" Value="0" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
-                                         To="1" 
-                                         Duration="0:0:0.3"/>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                To="1"
+                                Duration="0:0:0.3" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
                 <Trigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
-                                         To="0" 
-                                         Duration="0:0:0.3"/>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                To="0"
+                                Duration="0:0:0.3" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
@@ -238,12 +251,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Ellipse x:Name="ellipse" 
-                         Fill="White" 
-                         Height="14" Width="14" 
-                         Stroke="#FFD700"
-                         StrokeThickness="0"
-                         VerticalAlignment="Center" />
+                    <Ellipse
+                        x:Name="ellipse"
+                        Width="14"
+                        Height="14"
+                        VerticalAlignment="Center"
+                        Fill="White"
+                        Stroke="#FFD700"
+                        StrokeThickness="0" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="ellipse" Property="Fill" Value="#FFD700" />
@@ -264,7 +279,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border Background="#FFD700" Height="4" CornerRadius="2" />
+                    <Border
+                        Height="4"
+                        Background="#FFD700"
+                        CornerRadius="2" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -278,15 +296,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Slider">
                     <Grid Background="{TemplateBinding Background}">
-                        <Border x:Name="TrackBackground" 
-                            Background="#55FFFFFF" 
-                            Height="4" CornerRadius="2" 
-                            VerticalAlignment="Center" />
+                        <Border
+                            x:Name="TrackBackground"
+                            Height="4"
+                            VerticalAlignment="Center"
+                            Background="#55FFFFFF"
+                            CornerRadius="2" />
 
                         <Track x:Name="PART_Track">
                             <Track.DecreaseRepeatButton>
-                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}" 
-                                          Style="{StaticResource SliderRepeatButtonStyle}" />
+                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource SliderRepeatButtonStyle}" />
                             </Track.DecreaseRepeatButton>
                             <Track.Thumb>
                                 <Thumb Style="{StaticResource SliderThumbStyle}" />
@@ -295,13 +314,46 @@
                                 <RepeatButton Command="{x:Static Slider.IncreaseLarge}">
                                     <RepeatButton.Template>
                                         <ControlTemplate TargetType="RepeatButton">
-                                            <Border Background="Transparent" Height="4" />
+                                            <Border Height="4" Background="Transparent" />
                                         </ControlTemplate>
                                     </RepeatButton.Template>
                                 </RepeatButton>
                             </Track.IncreaseRepeatButton>
                         </Track>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="RoundMediaButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontSize" Value="14" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="Transparent">
+                        <Border
+                            x:Name="backBorder"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="backBorder" Property="Background" Value="#33FFFFFF" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="backBorder" Property="Background" Value="#55FFFFFF" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
