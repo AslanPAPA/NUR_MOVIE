@@ -35,22 +35,20 @@ namespace NUR.Views
         {
             var movie = this.DataContext as Movie;
 
-            if (movie != null && !string.IsNullOrEmpty(movie.Video_File))
+            // Теперь проверяем именно VideoUrl
+            if (movie != null && !string.IsNullOrEmpty(movie.VideoUrl))
             {
                 var mainWindow = Window.GetWindow(this) as MainWindow;
                 if (mainWindow != null)
                 {
-                    string fullUrl = movie.Video_File.StartsWith("http")
-                        ? movie.Video_File
-                        : $"http://127.0.0.1:8000{movie.Video_File}";
-
-                    mainWindow.StartPlayer(fullUrl);
+                    // Передаем готовую временную ссылку во Flyleaf
+                    mainWindow.StartPlayer(movie.VideoUrl);
                 }
             }
             else
             {
                 MessageBox.Show("Файл видео не найден или еще не загружен на сервер.", "Упс!");
             }
-        }
+        }   
     }
 }

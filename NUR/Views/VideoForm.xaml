@@ -11,102 +11,196 @@
     Unloaded="VideoForm_Unloaded"
     mc:Ignorable="d">
 
+
     <UserControl.Resources>
-        <local:TicksToTimeConverter x:Key="TicksToTime"/>
+        <local:TicksToTimeConverter x:Key="TicksToTime" />
     </UserControl.Resources>
 
-    <Grid Background="Black">
+
+    <Grid Background="Black" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown">
+
 
         <fl:FlyleafHost
             x:Name="mediaPlayerHost"
             KeyBindings="None"
+            Focusable="True"
             ToggleFullScreenOnDoubleClick="None">
+            <Grid>
 
-            <Grid
-                x:Name="navContainer"
-                Margin="10,5"
-                VerticalAlignment="Bottom"
-                Background="Black"
-                IsEnabled="False">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <Slider
-                    x:Name="positionSlider"
-                    Grid.Row="0"
-                    Margin="5,5"
-                    Focusable="False"
-                    Maximum="{Binding Player.Duration}"
-                    Minimum="0"
-                    PreviewMouseLeftButtonDown="VideoSlider_PreviewMouseLeftButtonDown"
-                    Style="{DynamicResource VideoSliderStyle}"
-                    Value="{Binding Player.CurTime, Mode=TwoWay}" />
-
-                <Grid Grid.Row="1" Margin="0,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0" Orientation="Horizontal">
-                        <Button
-                            x:Name="btnPlayPause"
-                            Width="35"
-                            Height="35"
+                <Grid
+                    x:Name="loadingOverlay"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ProgressBar
+                            Width="60"
+                            Height="60"
                             Background="Transparent"
-                            BorderThickness="0"
-                            Click="btnPlayPause_Click"
-                            Content="⏸"
-                            Cursor="Hand"
-                            FontSize="18"
                             Foreground="White"
-                            Style="{DynamicResource RoundMediaButtonStyle}" />
+                            IsIndeterminate="True"
+                            Style="{StaticResource {x:Static SystemParameters.FocusVisualStyleKey}}">
+                            <ProgressBar.Template>
+                                <ControlTemplate TargetType="ProgressBar">
+                                    <Grid>
+                                        <Ellipse
+                                            x:Name="SpinningEllipse"
+                                            RenderTransformOrigin="0.5,0.5"
+                                            Stroke="{TemplateBinding Foreground}"
+                                            StrokeDashArray="3 1"
+                                            StrokeThickness="4">
+                                            <Ellipse.RenderTransform>
+                                                <RotateTransform x:Name="Rotate" Angle="0" />
+                                            </Ellipse.RenderTransform>
+                                        </Ellipse>
+                                    </Grid>
+
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding Visibility, RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=2}}" Value="Visible">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard x:Name="SpinStoryboard">
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            RepeatBehavior="Forever"
+                                                            Storyboard.TargetName="Rotate"
+                                                            Storyboard.TargetProperty="Angle"
+                                                            From="0"
+                                                            To="360"
+                                                            Duration="0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <StopStoryboard BeginStoryboardName="SpinStoryboard" />
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ProgressBar.Template>
+                        </ProgressBar>
+
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Center"
+                            FontSize="14"
+                            FontWeight="Bold"
+                            Foreground="White" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid
+                    x:Name="navContainer"
+                    VerticalAlignment="Bottom"
+                    Background="Black"
+                    IsEnabled="False">
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="Auto" />
+
+                        <RowDefinition Height="Auto" />
+
+                    </Grid.RowDefinitions>
+
+
+                    <Slider
+                        x:Name="positionSlider"
+                        Grid.Row="0"
+                        Margin="5,0"
+                        Focusable="False"
+                        Maximum="{Binding Player.Duration}"
+                        Minimum="0"
+                        PreviewMouseLeftButtonDown="VideoSlider_PreviewMouseLeftButtonDown"
+                        Style="{DynamicResource VideoSliderStyle}"
+                        Value="{Binding Player.CurTime, Mode=TwoWay}" />
+
+
+                    <Grid Grid.Row="1" Margin="0,5">
+
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition Width="Auto" />
+
+                            <ColumnDefinition Width="*" />
+
+                            <ColumnDefinition Width="Auto" />
+
+                        </Grid.ColumnDefinitions>
+
+
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+
+                            <Button
+                                x:Name="btnPlayPause"
+                                Width="35"
+                                Height="35"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="btnPlayPause_Click"
+                                Content="⏸"
+                                Cursor="Hand"
+                                Focusable="False"
+                                FontSize="18"
+                                Foreground="White"
+                                Style="{DynamicResource RoundMediaButtonStyle}" />
+
+                            <Button
+                                x:Name="btnMute"
+                                Width="35"
+                                Height="35"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="btnMuteUnmute_Click"
+                                Content="🔊"
+                                Cursor="Hand"
+                                Focusable="False"
+                                FontSize="20"
+                                Foreground="White"
+                                Style="{DynamicResource RoundMediaButtonStyle}" />
+
+
+                            <StackPanel
+                                Margin="20,0,0,0"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+
+
+                                <TextBlock Foreground="White" Text="{Binding Player.CurTime, Converter={StaticResource TicksToTime}}" />
+
+
+                                <TextBlock Foreground="White" Text=" / " />
+
+
+                                <TextBlock Foreground="White" Text="{Binding Player.Duration, Converter={StaticResource TicksToTime}}" />
+
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+
                         <Button
-                            x:Name="btnMute"
+                            x:Name="btnFullScreen"
+                            Grid.Column="2"
                             Width="35"
                             Height="35"
                             Background="Transparent"
                             BorderThickness="0"
-                            Click="btnMuteUnmute_Click"
-                            Content="🔊"
+                            Click="btnFullScreen_Click"
+                            Content="⛶"
                             Cursor="Hand"
+                            Focusable="False"
                             FontSize="20"
                             Foreground="White"
                             Style="{DynamicResource RoundMediaButtonStyle}" />
 
-                        <StackPanel
-                            Margin="20,0,0,0"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
+                    </Grid>
 
-                            <TextBlock Foreground="White" Text="{Binding Player.CurTime, Converter={StaticResource TicksToTime}}" />
 
-                            <TextBlock Foreground="White" Text=" / " />
-
-                            <TextBlock Foreground="White" Text="{Binding Player.Duration, Converter={StaticResource TicksToTime}}" />
-
-                        </StackPanel>
-                    </StackPanel>
-
-                    <Button
-                        x:Name="btnFullScreen"
-                        Grid.Column="2"
-                        Width="35"
-                        Height="35"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Click="btnFullScreen_Click"
-                        Content="⛶"
-                        Cursor="Hand"
-                        FontSize="20"
-                        Foreground="White"
-                        Style="{DynamicResource RoundMediaButtonStyle}" />
                 </Grid>
-
             </Grid>
         </fl:FlyleafHost>
+
     </Grid>
 </UserControl>
+

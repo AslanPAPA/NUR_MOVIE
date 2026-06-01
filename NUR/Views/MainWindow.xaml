@@ -40,9 +40,9 @@
 
                 <Button
                     Width="110"
+                    HorizontalAlignment="Left"
                     Content="⋮ Каталог"
                     FontSize="15"
-                    HorizontalAlignment="Left"
                     FontWeight="DemiBold"
                     Style="{StaticResource ButtonRoundStyle}" />
                 <Border
@@ -53,7 +53,6 @@
                         <Image
                             Width="15"
                             Height="15"
-                            
                             Margin="10,5"
                             Source="/Assets/images/search.png" />
                         <TextBox
@@ -65,7 +64,7 @@
                             CaretBrush="White"
                             FontSize="15"
                             Foreground="White"
-                            TextChanged="SearchBox_TextChanged"/>
+                            TextChanged="SearchBox_TextChanged" />
                     </StackPanel>
                 </Border>
 
@@ -80,11 +79,18 @@
                         FontWeight="DemiBold"
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
-                   
+
                     <Button
                         Width="110"
                         Click="videoPlayer_Click"
                         Content="Видеоплеер"
+                        FontSize="15"
+                        FontWeight="DemiBold"
+                        Foreground="White"
+                        Style="{StaticResource ButtonRoundStyle}" />
+                    <Button
+                        Width="110"
+                        Content="Настройки"
                         FontSize="15"
                         FontWeight="DemiBold"
                         Foreground="White"

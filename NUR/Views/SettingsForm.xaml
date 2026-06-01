@@ -1,12 +1,67 @@
-﻿<UserControl x:Class="NUR.Views.SettingsForm"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NUR.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Foreground="White" Text="НАСТРОЙКИ"/>
+﻿<UserControl
+    x:Class="NUR.Views.SettingsForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:NUR.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="700"
+    d:DesignWidth="1100"
+    mc:Ignorable="d">
+
+    <Grid Margin="40">
+        <StackPanel
+            Width="500"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top">
+
+            <TextBlock
+                Margin="0,0,0,30"
+                FontSize="28"
+                FontWeight="Bold"
+                Foreground="#FDDD2D"
+                Text="Настройки приложения" />
+
+            <Border
+                Margin="0,0,0,20"
+                Padding="20"
+                Background="#1F2020"
+                CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Text="Шаг перемотки видео" />
+                        <TextBlock
+                            Margin="0,5,0,0"
+                            FontSize="12"
+                            Foreground="Gray"
+                            Text="Интервал времени при нажатии на стрелки клавиатуры" />
+                    </StackPanel>
+
+                    <ComboBox
+                        x:Name="ComboSkipTime"
+                        Grid.Column="1"
+                        Width="100"
+                        Height="35"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="14"
+                        SelectedIndex="1">
+                        <ComboBoxItem Content="5 сек" />
+                        <ComboBoxItem Content="10 сек" />
+                        <ComboBoxItem Content="15 сек" />
+                    </ComboBox>
+                </Grid>
+            </Border>
+
+        </StackPanel>
     </Grid>
 </UserControl>

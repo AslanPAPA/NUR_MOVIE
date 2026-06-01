@@ -74,8 +74,8 @@ namespace NUR.Views
         {
             using (HttpClient client = new HttpClient())
             {
-                
-                string url = "http://127.0.0.1:8000/api/movies/";
+
+                string url = "http://185.246.222.35:8080/api/movies/";
 
                 var response = await client.GetStringAsync(url);
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -114,7 +114,6 @@ namespace NUR.Views
             videoForm.Visibility = Visibility.Collapsed;
             settingsForm.Visibility = Visibility.Collapsed;
             movieDetailForm.Visibility = Visibility.Collapsed;
-
             selectedForm.Visibility = Visibility.Visible;
         }
 
@@ -134,6 +133,11 @@ namespace NUR.Views
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            ShowForm(settingsForm);
         }
     }
    
