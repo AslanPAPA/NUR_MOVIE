@@ -15,6 +15,17 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="20">
 
+
+            <TextBlock
+                x:Name="NoMoviesText"
+                Margin="0,30"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                FontWeight="SemiBold"
+                Foreground="White"
+                Text="По вашему запросу ничего не найдено"
+                Visibility="Collapsed" />
+            
             <StackPanel Margin="0,0,0,20">
                 <TextBlock
                     Margin="10,0,0,10"
@@ -154,9 +165,9 @@
                                                         FontSize="12"
                                                         FontWeight="Bold"
                                                         Foreground="White"
+                                                        MouseDown="SelectMovie_MouseDown"
                                                         Text="{Binding Title}"
-                                                        TextWrapping="Wrap"
-                                                        MouseDown="SelectMovie_MouseDown"/>
+                                                        TextWrapping="Wrap" />
 
                                                     <TextBlock
                                                         Margin="0,4,0,0"

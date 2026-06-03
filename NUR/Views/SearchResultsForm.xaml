@@ -1,0 +1,61 @@
+﻿<UserControl
+    x:Class="NUR.Views.SearchResultsForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:NUR.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid Background="#1A1A1B">
+
+        <TextBlock
+            x:Name="NoResultsText"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="24"
+            Foreground="White"
+            Text="Ничего не найдено"
+            Visibility="Collapsed" />
+
+        <ScrollViewer>
+            <ItemsControl x:Name="ResultsList">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Width="130"
+                            Margin="10"
+                            Background="#222"
+                            CornerRadius="8"
+                            Cursor="Hand"
+                            MouseDown="SelectMovie_MouseDown">
+
+                            <StackPanel>
+                                <Image
+                                    Height="190"
+                                    Source="{Binding Poster}"
+                                    Stretch="UniformToFill" />
+
+                                <TextBlock
+                                    Margin="5"
+                                    Foreground="White"
+                                    Text="{Binding Title}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

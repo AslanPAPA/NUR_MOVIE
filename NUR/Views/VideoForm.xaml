@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="744"
     d:DesignWidth="1200"
+    Focusable="True"
     Unloaded="VideoForm_Unloaded"
     mc:Ignorable="d">
 
@@ -17,13 +18,12 @@
     </UserControl.Resources>
 
 
-    <Grid Background="Black" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown">
+    <Grid Background="Black">
 
 
         <fl:FlyleafHost
             x:Name="mediaPlayerHost"
             KeyBindings="None"
-            Focusable="True"
             ToggleFullScreenOnDoubleClick="None">
             <Grid>
 
@@ -78,13 +78,6 @@
                                 </ControlTemplate>
                             </ProgressBar.Template>
                         </ProgressBar>
-
-                        <TextBlock
-                            Margin="0,10,0,0"
-                            HorizontalAlignment="Center"
-                            FontSize="14"
-                            FontWeight="Bold"
-                            Foreground="White" />
                     </StackPanel>
                 </Grid>
 
@@ -95,19 +88,14 @@
                     IsEnabled="False">
 
                     <Grid.RowDefinitions>
-
                         <RowDefinition Height="Auto" />
-
                         <RowDefinition Height="Auto" />
-
                     </Grid.RowDefinitions>
-
 
                     <Slider
                         x:Name="positionSlider"
                         Grid.Row="0"
                         Margin="5,0"
-                        Focusable="False"
                         Maximum="{Binding Player.Duration}"
                         Minimum="0"
                         PreviewMouseLeftButtonDown="VideoSlider_PreviewMouseLeftButtonDown"
@@ -139,7 +127,6 @@
                                 Click="btnPlayPause_Click"
                                 Content="⏸"
                                 Cursor="Hand"
-                                Focusable="False"
                                 FontSize="18"
                                 Foreground="White"
                                 Style="{DynamicResource RoundMediaButtonStyle}" />
@@ -153,7 +140,6 @@
                                 Click="btnMuteUnmute_Click"
                                 Content="🔊"
                                 Cursor="Hand"
-                                Focusable="False"
                                 FontSize="20"
                                 Foreground="White"
                                 Style="{DynamicResource RoundMediaButtonStyle}" />
@@ -178,21 +164,52 @@
 
                         </StackPanel>
 
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <Button
+                                x:Name="btnQuality"
+                                Grid.Column="2"
+                                Width="45"
+                                Height="35"
+                                Margin="0,0,5,0"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="btnQuality_Click"
+                                Content="1080p"
+                                Cursor="Hand"
+                                FontSize="13"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Style="{DynamicResource RoundMediaButtonStyle}">
+                                <Button.ContextMenu>
+                                    <ContextMenu
+                                        x:Name="qualityMenu"
+                                        Background="#1A1A1A"
+                                        BorderBrush="#333333">
+                                        <ContextMenu.Resources>
+                                            <Style TargetType="MenuItem">
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="Background" Value="#1A1A1A" />
+                                            </Style>
+                                        </ContextMenu.Resources>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
 
-                        <Button
-                            x:Name="btnFullScreen"
-                            Grid.Column="2"
-                            Width="35"
-                            Height="35"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Click="btnFullScreen_Click"
-                            Content="⛶"
-                            Cursor="Hand"
-                            Focusable="False"
-                            FontSize="20"
-                            Foreground="White"
-                            Style="{DynamicResource RoundMediaButtonStyle}" />
+                            <Button
+                                x:Name="btnFullScreen"
+                                Grid.Column="2"
+                                Width="35"
+                                Height="35"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="btnFullScreen_Click"
+                                Content="⛶"
+                                Cursor="Hand"
+                                FontSize="20"
+                                Foreground="White"
+                                Style="{DynamicResource RoundMediaButtonStyle}" />
+                        </StackPanel>
+
 
                     </Grid>
 

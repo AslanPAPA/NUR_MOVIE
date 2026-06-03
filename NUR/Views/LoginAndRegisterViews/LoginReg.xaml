@@ -1,0 +1,93 @@
+﻿<Window
+    x:Class="NUR.Views.LoginReg"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:auth="clr-namespace:NUR.Views.LoginAndRegisterViews"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:NUR.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="NUR - Авторизация"
+    Width="400"
+    Height="500"
+    AllowsTransparency="True"
+    Background="#121212"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <Grid Margin="20" MouseDown="Grid_MouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,0">
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="20"
+                FontWeight="ExtraBold"
+                Foreground="#FDDD2D"
+                Text="NUR" />
+
+            <Button
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Height="30"
+                Click="Close_Click"
+                Content="✖"
+                Style="{StaticResource CloseButtonRoundStyle}" />
+        </Grid>
+
+        <StackPanel
+            Grid.Row="1"
+            Margin="5,10,0,15"
+            Orientation="Horizontal">
+            <RadioButton
+                x:Name="rbShowLogin"
+                Width="80"
+                Height="30"
+                Content="Вход"
+                IsChecked="True"
+                Style="{StaticResource AuthNavRadioButtonStyle}" />
+
+            <RadioButton
+                x:Name="rbShowRegister"
+                Width="110"
+                Height="30"
+                Margin="10,0,0,0"
+                Content="Регистрация"
+                Style="{StaticResource AuthNavRadioButtonStyle}" />
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <auth:LoginForm x:Name="loginForm">
+                <auth:LoginForm.Style>
+                    <Style TargetType="UserControl">
+                        <Setter Property="Visibility" Value="Hidden" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=rbShowLogin}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </auth:LoginForm.Style>
+            </auth:LoginForm>
+
+            <auth:Register x:Name="registerForm">
+                <auth:Register.Style>
+                    <Style TargetType="UserControl">
+                        <Setter Property="Visibility" Value="Hidden" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=rbShowRegister}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </auth:Register.Style>
+            </auth:Register>
+        </Grid>
+    </Grid>
+</Window>

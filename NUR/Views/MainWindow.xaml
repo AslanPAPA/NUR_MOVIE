@@ -51,13 +51,13 @@
                     CornerRadius="10">
                     <StackPanel Orientation="Horizontal">
                         <Image
-                            Width="15"
-                            Height="15"
+                            Width="20"
+                            Height="20"
                             Margin="10,5"
                             Source="/Assets/images/search.png" />
                         <TextBox
                             x:Name="SearchBox"
-                            Width="200"
+                            Width="150"
                             VerticalContentAlignment="Center"
                             Background="Transparent"
                             BorderThickness="0"
@@ -65,8 +65,65 @@
                             FontSize="15"
                             Foreground="White"
                             TextChanged="SearchBox_TextChanged" />
+
+                        <Button
+                            x:Name="BtnFilter"
+                            Width="40"
+                            Height="35"
+                            Margin="0,0,0,0"
+                            Click="BtnFilter_Click"
+                            Style="{StaticResource ButtonRoundStyle}">
+                            <Image
+                                Width="20"
+                                Height="20"
+                                Margin="0,2,0,0"
+                                Source="/Assets/images/filters.png" />
+                        </Button>
+                        <Popup
+                            x:Name="FilterPopup"
+                            Placement="Bottom"
+                            PlacementTarget="{Binding ElementName=BtnFilter}"
+                            StaysOpen="False">
+
+                            <Border
+                                Padding="15"
+                                Background="#222"
+                                BorderBrush="#444"
+                                BorderThickness="1">
+
+                                <StackPanel Width="250">
+
+                                    <TextBlock Foreground="White" Text="Жанр" />
+
+                                    <ComboBox x:Name="GenreFilter" Margin="0,5,0,10" />
+
+                                    <TextBlock Foreground="White" Text="Актёр" />
+
+                                    <ComboBox x:Name="ActorFilter" Margin="0,5,0,10" />
+
+                                    <TextBlock Foreground="White" Text="Год" />
+
+                                    <ComboBox x:Name="YearFilter" Margin="0,5,0,15" />
+
+                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                                        <Button
+                                            Margin="0,0,10,0"
+                                            Click="ResetFilters_Click"
+                                            Content="Сброс" />
+
+                                        <Button Click="ApplyFilters_Click" Content="Применить" />
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </Border>
+
+                        </Popup>
                     </StackPanel>
                 </Border>
+
+
 
                 <StackPanel
                     Margin="0,0,20,0"
@@ -95,6 +152,14 @@
                         FontWeight="DemiBold"
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
+                    <Button
+                        Width="110"
+                        Content="Профиль"
+                        FontSize="15"
+                        FontWeight="DemiBold"
+                        Foreground="White"
+                        Style="{StaticResource ButtonRoundStyle}" />
+
                 </StackPanel>
             </StackPanel>
 
@@ -116,7 +181,9 @@
             <local:HomeForm x:Name="homeForm" Visibility="Visible" />
             <local:VideoForm x:Name="videoForm" Visibility="Hidden" />
             <local:SettingsForm x:Name="settingsForm" Visibility="Hidden" />
+            <local:UserProfile x:Name="userProfile" Visibility="Hidden" />
             <local:MovieDetailForm x:Name="movieDetailForm" Visibility="Hidden" />
+            <local:SearchResultsForm x:Name="searchResultsForm" Visibility="Collapsed" />
         </Grid>
 
     </Grid>

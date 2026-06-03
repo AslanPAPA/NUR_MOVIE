@@ -1,0 +1,92 @@
+﻿<UserControl
+    x:Class="NUR.Views.LoginAndRegisterViews.Register"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:NUR.Views.LoginAndRegisterViews"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="350"
+    d:DesignWidth="360"
+    mc:Ignorable="d">
+    <StackPanel>
+            <TextBlock
+                Margin="0,0,0,5"
+                FontSize="13"
+                Foreground="#AAAAAA"
+                Text="Имя пользователя (Логин)" />
+            <TextBox
+                x:Name="txtRegUsername"
+                Height="35"
+                Padding="8,7,5,5"
+                Background="#1F2020"
+                BorderBrush="#333333"
+                CaretBrush="White"
+                FontSize="14"
+                Foreground="White" />
+
+            <TextBlock
+                Margin="0,15,0,5"
+                FontSize="13"
+                Foreground="#AAAAAA"
+                Text="Email (Необязательно)" />
+            <TextBox
+                x:Name="txtRegEmail"
+                Height="35"
+                Padding="8,7,5,5"
+                Background="#1F2020"
+                BorderBrush="#333333"
+                CaretBrush="White"
+                FontSize="14"
+                Foreground="White" />
+
+            <TextBlock
+                Margin="0,15,0,5"
+                FontSize="13"
+                Foreground="#AAAAAA"
+                Text="Пароль" />
+            <PasswordBox
+                x:Name="txtRegPassword"
+                Height="35"
+                Padding="8,7,5,5"
+                Background="#1F2020"
+                BorderBrush="#333333"
+                CaretBrush="White"
+                FontSize="14"
+                Foreground="White" />
+
+            <TextBlock
+                Margin="0,15,0,5"
+                FontSize="13"
+                Foreground="#AAAAAA"
+                Text="Повторите пароль" />
+            <PasswordBox
+                x:Name="txtRegConfirmPassword"
+                Height="35"
+                Padding="8,7,5,5"
+                Background="#1F2020"
+                BorderBrush="#333333"
+                CaretBrush="White"
+                FontSize="14"
+                Foreground="White" />
+
+            <Button
+                x:Name="btnRegister"
+                Margin="0,30,0,10"
+                Click="btnRegister_Click"
+                Content="Зарегистрироваться"
+                Style="{StaticResource AuthButtonStyle}" />
+
+            <TextBlock
+                x:Name="LoadingText"
+                Margin="20,1,0,0"
+                HorizontalAlignment="Center"
+                FontSize="14"
+                FontWeight="SemiBold"
+                Foreground="#FFFFFF"
+                Opacity="0.4"
+                Style="{StaticResource loadingPools}"
+                Text="Выполняется регистрация..."
+                Visibility="Collapsed" />
+        </StackPanel>
+
+</UserControl>
