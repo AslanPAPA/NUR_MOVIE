@@ -137,14 +137,7 @@
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
 
-                    <Button
-                        Width="110"
-                        Click="videoPlayer_Click"
-                        Content="Видеоплеер"
-                        FontSize="15"
-                        FontWeight="DemiBold"
-                        Foreground="White"
-                        Style="{StaticResource ButtonRoundStyle}" />
+                    
                     <Button
                         Width="110"
                         Content="Настройки"
@@ -155,6 +148,13 @@
                     <Button
                         Width="110"
                         Content="Профиль"
+                        FontSize="15"
+                        FontWeight="DemiBold"
+                        Foreground="White"
+                        Style="{StaticResource ButtonRoundStyle}" />
+                    <Button
+                        Width="110"
+                        Content="Избранное"
                         FontSize="15"
                         FontWeight="DemiBold"
                         Foreground="White"
@@ -179,10 +179,11 @@
 
         <Grid Grid.Row="1">
             <local:HomeForm x:Name="homeForm" Visibility="Visible" />
-            <local:VideoForm x:Name="videoForm" Visibility="Hidden" />
-            <local:SettingsForm x:Name="settingsForm" Visibility="Hidden" />
-            <local:UserProfile x:Name="userProfile" Visibility="Hidden" />
-            <local:MovieDetailForm x:Name="movieDetailForm" Visibility="Hidden" />
+            <local:VideoForm x:Name="videoForm" Visibility="Collapsed" />
+            <local:SettingsForm x:Name="settingsForm" Visibility="Collapsed" />
+            <local:UserProfile x:Name="userProfile" Visibility="Collapsed" />
+            <local:MovieDetailForm x:Name="movieDetailForm" Visibility="Collapsed" />
+            <local:FavoritesForm x:Name="favoritesForm" Visibility="Collapsed"/>
             <local:SearchResultsForm x:Name="searchResultsForm" Visibility="Collapsed" />
         </Grid>
 

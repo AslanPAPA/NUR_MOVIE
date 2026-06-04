@@ -1,10 +1,9 @@
-﻿using BCrypt.Net;
-using Microsoft.EntityFrameworkCore;
-using NUR.Data;
+﻿using NUR.Data;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace NUR.Views.LoginAndRegisterViews
 {
@@ -35,42 +34,54 @@ namespace NUR.Views.LoginAndRegisterViews
 
             try
             {
-             
-
-                using (var db = new NurDbContext())
+                var loginData = new
                 {
-                    var user = await db.AppUsers
-                        .FirstOrDefaultAsync(u => u.Username == username);
+                    username = username,
+                    password = password
+                };
 
-                    if (user == null)
-                    {
-                        MessageBox.Show("Пользователь с таким логином не найден в базе.");
-                        return;
-                    }
-                    bool isPasswordValid = await Task.Run(() =>
-                        BCrypt.Net.BCrypt.Verify(password, user.Password));
+                var json = JsonSerializer.Serialize(loginData);
 
-                    if (isPasswordValid)
-                    {
-                        UserSession.Username = user.Username;
+                var content = new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json"
+                );
 
-                        MessageBox.Show("Успешный вход!");
-                        LoadingText.Visibility = Visibility.Collapsed;
+                var response = await ApiClient.Instance.PostAsync(
+                    "http://185.246.222.35:8080/api/login/",
+                    content
+                );
 
-                        MainWindow mainWin = new MainWindow();
-                        mainWin.Show();
+                if (response.IsSuccessStatusCode)
+                {
+                    var result =
+                        await response.Content.ReadAsStringAsync();
 
-                        Window.GetWindow(this)?.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Неверный пароль.");
-                    }
+                    var loginResponse =
+                        JsonSerializer.Deserialize<LoginResponse>(result);
+
+                    ApiClient.Token = loginResponse.token;
+
+                    UserSession.Username =
+                        loginResponse.username;
+
+                    MessageBox.Show("Успешный вход!");
+
+
+                    MainWindow mainWin = new MainWindow();
+                    mainWin.Show();
+
+                    Window.GetWindow(this)?.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Неверный логин или пароль");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Критическая ошибка при входе: {ex.Message}");
+                MessageBox.Show(ex.Message);
             }
             finally
             {

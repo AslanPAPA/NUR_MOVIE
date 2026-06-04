@@ -1,7 +1,9 @@
-﻿using System.Windows;
+﻿using NUR.Data;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Windows;
 using System.Windows.Controls;
-using Microsoft.EntityFrameworkCore;
-using NUR.Data;
 
 namespace NUR.Views.LoginAndRegisterViews
 {
@@ -29,7 +31,8 @@ namespace NUR.Views.LoginAndRegisterViews
                 string password = txtRegPassword.Password;
                 string confirmPassword = txtRegConfirmPassword.Password;
 
-                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+                if (string.IsNullOrEmpty(username) ||
+                    string.IsNullOrEmpty(password))
                 {
                     MessageBox.Show("Вы ввели пустые данные!");
                     return;
@@ -47,57 +50,62 @@ namespace NUR.Views.LoginAndRegisterViews
                     return;
                 }
 
-                using (var db = new NurDbContext())
+                var registerData = new
                 {
-                    if (await db.AppUsers.AnyAsync(u => u.Username == username))
-                    {
-                        MessageBox.Show("Пользователь с таким именем уже существует.");
-                        return;
-                    }
+                    username = username,
+                    password = password,
+                    email = string.IsNullOrWhiteSpace(email) ? null : email
+                };
 
-                    string passwordHash = await Task.Run(() =>
-                        BCrypt.Net.BCrypt.HashPassword(password));
+                var json = JsonSerializer.Serialize(registerData);
 
+                var content = new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json"
+                );
 
-                    var newUser = new AppUser
-                    {
-                        Username = username,
-                        Password = passwordHash,
-                        Email = string.IsNullOrWhiteSpace(email) ? null : email
-                    };
+                var response = await ApiClient.Instance.PostAsync(
+                    "http://185.246.222.35:8080/api/register/",
+                    content
+                );
 
-                    db.AppUsers.Add(newUser);
-                    db.SaveChanges();
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Регистрация успешна!");
+
+                    txtRegUsername.Clear();
+                    txtRegEmail.Clear();
+                    txtRegPassword.Clear();
+                    txtRegConfirmPassword.Clear();
                 }
+                else
+                {
+                    string error =
+                        await response.Content.ReadAsStringAsync();
 
-                MessageBox.Show("Регистрация успешна!");
-                LoadingText.Visibility = Visibility.Collapsed;
-                txtRegUsername.Clear();
-                txtRegPassword.Clear();
-                txtRegConfirmPassword.Clear();
+                    MessageBox.Show(error);
+                }
             }
             catch (Exception ex)
             {
-                string errorMessage = ex.Message;
-                if (ex.InnerException != null)
-                {
-                    errorMessage += "\n\nВнутренняя ошибка: " + ex.InnerException.Message;
-                }
-
-                MessageBox.Show(errorMessage, "Детали ошибки", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    $"Ошибка: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
             finally
             {
+                LoadingText.Visibility = Visibility.Collapsed;
+
                 txtRegUsername.IsEnabled = true;
                 txtRegEmail.IsEnabled = true;
                 txtRegPassword.IsEnabled = true;
                 txtRegConfirmPassword.IsEnabled = true;
                 btnRegister.IsEnabled = true;
-
-
             }
-
-
         }
     }
 }

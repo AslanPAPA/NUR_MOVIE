@@ -11,12 +11,13 @@
 
   <ItemGroup>
     <None Remove="Assets\images\filters.png" />
+    <None Remove="Assets\images\full_heart.png" />
     <None Remove="Assets\images\logo.png" />
+    <None Remove="Assets\images\no_full_hearе.png" />
     <None Remove="Assets\images\search.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="Flyleaf.FFmpeg.Bindings" Version="8.1.0" />
     <PackageReference Include="FlyleafLib" Version="3.10.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.8" />
@@ -30,7 +31,13 @@
     <Resource Include="Assets\images\filters.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\images\full_heart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\images\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\no_full_hearе.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\images\search.png">

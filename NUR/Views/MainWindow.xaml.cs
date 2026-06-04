@@ -1,5 +1,5 @@
-﻿using NUR.Models;
-using NUR.Services;
+﻿using NUR.Data;
+using NUR.Models;
 using SharpGen.Runtime;
 using System.Text.Json;
 using System.Windows;
@@ -160,7 +160,8 @@ namespace NUR.Views
 
         private async Task<List<Movie>> GetMoviesAsync()
         {
-                string url = "http://185.246.222.35:8080/api/movies/";
+          
+            string url = "http://185.246.222.35:8080/api/movies/";
 
                 var response = await ApiClient.Instance.GetStringAsync(url);
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -188,7 +189,7 @@ namespace NUR.Views
                         ShowForm(userProfile);
                         break;
                     case "Избранное":
-                        MessageBox.Show("Раздел 'Избранное' в разработке");
+                        ShowForm(favoritesForm);
                         break;
                 }
             }
@@ -202,6 +203,7 @@ namespace NUR.Views
             movieDetailForm.Visibility = Visibility.Collapsed;
             userProfile.Visibility = Visibility.Collapsed;
             searchResultsForm.Visibility = Visibility.Collapsed;
+            favoritesForm.Visibility = Visibility.Collapsed;
 
             selectedForm.Visibility = Visibility.Visible;
         }
