@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using NUR.Data;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace NUR.Views
 {
@@ -8,7 +10,22 @@ namespace NUR.Views
         public UserProfile()
         {
             InitializeComponent();
-            txtUsername.Text = $"Привет, {UserSession.Username}!";
+
+            string name = UserSession.Username ?? "Гость";
+            txtUsername.Text = $"Привет, {name}!";
+        }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            NUR.Properties.Settings.Default.AuthToken = "";
+            NUR.Properties.Settings.Default.Save();
+
+            ApiClient.Token = null;
+
+            LoginReg loginWin = new LoginReg();
+            loginWin.Show();
+
+            Window.GetWindow(this)?.Close();
         }
     }
 }

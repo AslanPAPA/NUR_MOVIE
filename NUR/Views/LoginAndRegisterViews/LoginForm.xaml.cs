@@ -61,7 +61,7 @@ namespace NUR.Views.LoginAndRegisterViews
                     var loginResponse =
                         JsonSerializer.Deserialize<LoginResponse>(result);
 
-                    ApiClient.Token = loginResponse.token;
+                    ApiClient.SetToken(loginResponse.token, loginResponse.username);
 
                     UserSession.Username =
                         loginResponse.username;

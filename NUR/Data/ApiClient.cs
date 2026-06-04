@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace NUR.Data
 {
@@ -9,6 +10,16 @@ namespace NUR.Data
             new HttpClient();
 
         public static string Token { get; set; }
+
+
+        public static void SetToken(string token, string username) 
+        {
+            Token = token;
+            UserSession.Username = username;
+            NUR.Properties.Settings.Default.AuthToken = token;
+            NUR.Properties.Settings.Default.Username = username; 
+            NUR.Properties.Settings.Default.Save();
+        }
 
         public static HttpClient Instance
         {

@@ -17,24 +17,32 @@ namespace NUR.Views
 
         public VideoForm()
         {
-            playerConfig = new Config();
 
-
-            player = new Player(playerConfig);
-
-            this.DataContext = this;
-
-            InitializeComponent();
-            mediaPlayerHost.Player = player;
-
-            
-
-            mediaPlayerHost.Player.BufferingStarted += Player_BufferingStarted;
-            mediaPlayerHost.Player.BufferingCompleted += Player_BufferingCompleted;
-
-   
+            this.Loaded += VideoForm_Loaded;
+           
         }
 
+        private void VideoForm_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Теперь mediaPlayerHost гарантированно существует
+            if (mediaPlayerHost != null && player == null)
+            {
+                try
+                {
+                    playerConfig = new Config();
+                    player = new Player(playerConfig);
+                    mediaPlayerHost.Player = player;
+
+                    // Подписка на события только тут
+                    mediaPlayerHost.Player.BufferingStarted += Player_BufferingStarted;
+                    mediaPlayerHost.Player.BufferingCompleted += Player_BufferingCompleted;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }
+        }
         private void Player_BufferingStarted(object sender, EventArgs e)
         {
             Dispatcher.Invoke(() =>
