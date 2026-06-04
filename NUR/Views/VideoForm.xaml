@@ -26,7 +26,19 @@
             KeyBindings="None"
             ToggleFullScreenOnDoubleClick="None">
             <Grid>
-
+                
+                <Grid x:Name="btnBack" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <Button
+                        Width="80"
+                        Height="40"
+                        Content="НАЗАД"
+                        Background="Transparent"
+                        Foreground="White"
+                        Click="btnBack_Click"
+                        Style="{StaticResource BackButton}"
+                        FontSize="20"/>
+                </Grid>
+                
                 <Grid
                     x:Name="loadingOverlay"
                     HorizontalAlignment="Center"

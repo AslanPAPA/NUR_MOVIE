@@ -8,6 +8,7 @@
     d:DesignHeight="800"
     d:DesignWidth="1000"
     Background="#1A1A1B"
+    IsVisibleChanged="UserControl_IsVisibleChanged"
     mc:Ignorable="d">
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -72,44 +73,68 @@
                                     Opacity="0.7"
                                     Text="{Binding Country}" />
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal">
 
-                            <Button
-                                x:Name="BtnWatch"
-                                Width="200"
-                                Height="50"
-                                Margin="0,30,0,0"
-                                HorizontalAlignment="Left"
-                                Background="#FFD700"
-                                Click="BtnWatch_Click"
-                                Content="СМОТРЕТЬ"
-                                Cursor="Hand"
-                                FontSize="18"
-                                FontWeight="Bold"
-                                Foreground="Black"
-                                Style="{StaticResource WatchBtnStyle}" />
+                                <Button
+                                    x:Name="BtnWatch"
+                                    Width="200"
+                                    Height="50"
+                                    Margin="0,30,5,0"
+                                    HorizontalAlignment="Left"
+                                    Background="#FFD700"
+                                    Click="BtnWatch_Click"
+                                    Content="СМОТРЕТЬ"
+                                    Cursor="Hand"
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    Foreground="Black"
+                                    Style="{StaticResource WatchBtnStyle}" />
+
+                                <Button
+                                    x:Name="BtnFavorite"
+                                    Width="52"
+                                    Height="50"
+                                    Margin="0,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Cursor="Hand"
+                                    Style="{StaticResource ButtonRoundStyle}">
+                                    <Image
+                                        x:Name="FavIcon"
+                                        Width="50"
+                                        Height="50"
+                                        Source="/Assets/images/no_full_hearе.png" />
+                                </Button>
+
+                            </StackPanel>
+
 
 
                         </StackPanel>
-                    </StackPanel>
-                    <Button
-                        x:Name="BtnFavorite"
-                        Width="52"
-                        Height="50"
-                        Margin="70,370,0,0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Style="{StaticResource ButtonRoundStyle}">
-                        <Image
-                            x:Name="FavIcon"
-                            Width="50"
+
+                        <Button
+                            x:Name="BtnDownload"
+                            Width="220"
                             Height="50"
-                            Source="/Assets/images/no_full_hearе.png" />
-                    </Button>
+                            HorizontalAlignment="Left"
+                            Background="#FFD700"
+                            Click="BtnDownload_Click"
+                            Content="СМОТРЕТЬ ОФФЛАЙН"
+                            Cursor="Hand"
+                            FontSize="18"
+                            VerticalAlignment="Bottom"
+                            FontWeight="Bold"
+                            Foreground="Black"
+                            Style="{StaticResource WatchBtnStyle}" />
+
+                    </StackPanel>
 
                 </Grid>
 
                 <StackPanel Margin="50,30,50,50">
+
                     <TextBlock
                         Margin="0,0,0,15"
                         FontSize="22"
@@ -173,5 +198,7 @@
             FontSize="14"
             Foreground="White"
             Style="{StaticResource BackButton}" />
+
+
     </Grid>
 </UserControl>

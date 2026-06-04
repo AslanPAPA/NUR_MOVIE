@@ -14,6 +14,15 @@ namespace NUR
 
             try
             {
+                string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FFmpeg");
+
+                Engine.Start(new EngineConfig()
+                {
+                    FFmpegPath = ffmpegPath,
+                    UIRefresh = true,
+                    UIRefreshInterval = 250
+                });
+
                 string savedToken = NUR.Properties.Settings.Default.AuthToken;
                 string savedUsername = NUR.Properties.Settings.Default.Username;
 
@@ -33,14 +42,13 @@ namespace NUR
                     loginWin.Show();
                 }
 
-                string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FFmpeg");
+                
 
-                Engine.Start(new EngineConfig()
+                string downloadPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Downloads");
+                if (!Directory.Exists(downloadPath))
                 {
-                    FFmpegPath = ffmpegPath,
-                    UIRefresh = true,
-                    UIRefreshInterval = 250
-                });
+                    Directory.CreateDirectory(downloadPath);
+                }
             }
             catch (Exception ex)
             {

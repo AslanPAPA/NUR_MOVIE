@@ -13,18 +13,16 @@ namespace NUR.Views
     {
         public Player player { get; set; }
         private Config playerConfig;
-        private bool isDragging = false;
+        private TimeSpan lastPosition = TimeSpan.Zero;
 
         public VideoForm()
         {
-
+            InitializeComponent();
             this.Loaded += VideoForm_Loaded;
-           
         }
 
         private void VideoForm_Loaded(object sender, RoutedEventArgs e)
         {
-            // Теперь mediaPlayerHost гарантированно существует
             if (mediaPlayerHost != null && player == null)
             {
                 try
@@ -33,14 +31,13 @@ namespace NUR.Views
                     player = new Player(playerConfig);
                     mediaPlayerHost.Player = player;
 
-                    // Подписка на события только тут
                     mediaPlayerHost.Player.BufferingStarted += Player_BufferingStarted;
                     mediaPlayerHost.Player.BufferingCompleted += Player_BufferingCompleted;
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex.Message);
-                }
+                    MessageBox.Show($"Ошибка {ex.Message}");
+                }   
             }
         }
         private void Player_BufferingStarted(object sender, EventArgs e)
@@ -72,13 +69,7 @@ namespace NUR.Views
 
         private void VideoForm_Unloaded(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("VideoForm_Unloaded");
-
-            if (player != null)
-            {
-                player.Stop();
-                player.Dispose();
-            }
+            player?.Pause();
         }
 
         private void btnPlayPause_Click(object sender, RoutedEventArgs e)
@@ -136,6 +127,18 @@ namespace NUR.Views
         private void btnQuality_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (player != null)
+            {
+                lastPosition = TimeSpan.FromMilliseconds(player.CurTime);
+                player.Pause();
+            }
+
+            var mainWindow = Window.GetWindow(this) as MainWindow;
+            mainWindow?.ShowForm(mainWindow.movieDetailForm);
         }
     }
 }

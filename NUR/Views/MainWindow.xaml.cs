@@ -1,6 +1,7 @@
 ﻿using NUR.Data;
 using NUR.Models;
 using SharpGen.Runtime;
+using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -221,6 +222,15 @@ namespace NUR.Views
 
         public void StartPlayer(string videoUrl)
         {
+            string path = videoUrl;
+            if (!videoUrl.StartsWith("http"))
+            {
+                if (!Path.IsPathRooted(videoUrl))
+                {
+                    path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, videoUrl);
+                }
+            }
+
             ShowForm(videoForm);
             videoForm.mediaStart(videoUrl);
         }
@@ -230,10 +240,6 @@ namespace NUR.Views
             ShowForm(settingsForm);
         }
 
-        private void btnProfile_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void BtnFilter_Click(object sender, RoutedEventArgs e)
         {
