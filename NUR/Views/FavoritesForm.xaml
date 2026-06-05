@@ -39,7 +39,8 @@
                                     Margin="5"
                                     FontWeight="Bold"
                                     Foreground="White"
-                                    Text="{Binding Title}" />
+                                    Text="{Binding Title}"
+                                    TextWrapping="Wrap"/>
 
                                 <TextBlock
                                     Margin="5,0,5,5"

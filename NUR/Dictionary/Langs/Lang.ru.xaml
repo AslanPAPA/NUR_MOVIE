@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    
+    <!-- настройки -->
+    <system:String x:Key="SettingsTitle">Настройки</system:String>
+    <system:String x:Key="VideoSpeed">Скорость воспроизведения</system:String>
+    <system:String x:Key="VideoSpeedDesc">Выберите скорость воспроизведения</system:String>
+    <system:String x:Key="LangApp">Язык приложения</system:String>
+    <system:String x:Key="LangAppDesc">Выберите язык интерфейса</system:String>
+
+    <!-- главная форма -->
+    <system:String x:Key="MainBtn">Главная</system:String>
+    <system:String x:Key="SettingsBtn">Настройки</system:String>
+    <system:String x:Key="ProfileBtn">Профиль</system:String>
+    <system:String x:Key="FavoriteBtn">Избранное</system:String>
+
+    <system:String x:Key="NewText">НОВИНКИ 2026</system:String>
+    
+    <system:String x:Key="Boevic">Боевик</system:String>
+    <system:String x:Key="Comedy">Комедия</system:String>
+    <system:String x:Key="Fantacy">Фантастика</system:String>
+    <system:String x:Key="Dramma">Драмма</system:String>
+
+    <!-- форма  профиль-->
+    <system:String x:Key="GreetingsText">Привет</system:String>
+    <system:String x:Key="ExitBtn">Выход</system:String>
+
+    <!-- форма  детали фильтма-->
+    <system:String x:Key="BackBtn">❮ НАЗАД</system:String>
+    <system:String x:Key="DescTxt">ОПИСАНИЕ</system:String>
+    <system:String x:Key="DirectorTxt">Режиссёр</system:String>
+    <system:String x:Key="ActorsTxt">Актёры</system:String>
+    <system:String x:Key="WatchBtn">СМОТРЕТЬ</system:String>
+    <system:String x:Key="DownloadedText">ФИЛЬМ СКАЧАН</system:String>
+    <system:String x:Key="WatchOfflineBtn">СМОТРЕТЬ ОФФЛАЙН</system:String>
+    
+</ResourceDictionary>

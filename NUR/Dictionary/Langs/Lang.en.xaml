@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="SettingsTitle">Settings</system:String>
+    <system:String x:Key="VideoSpeed">Playback speed</system:String>
+    <system:String x:Key="VideoSpeedDesc">Select playback speed</system:String>
+    <system:String x:Key="LangApp">Application language</system:String>
+    <system:String x:Key="LangAppDesc">Select interface language</system:String>
+
+    <system:String x:Key="MainBtn">Home</system:String>
+    <system:String x:Key="SettingsBtn">Settings</system:String>
+    <system:String x:Key="ProfileBtn">Profile</system:String>
+    <system:String x:Key="FavoriteBtn">Favorites</system:String>
+
+    <system:String x:Key="NewText">NEW 2026</system:String>
+    
+    <system:String x:Key="Boevic">Action</system:String>
+    <system:String x:Key="Comedy">Comedy</system:String>
+    <system:String x:Key="Fantacy">Sci-Fi</system:String>
+    <system:String x:Key="Dramma">Drama</system:String>
+
+    <system:String x:Key="GreetingsText">Hello</system:String>
+    <system:String x:Key="ExitBtn">Log out</system:String>
+
+    <system:String x:Key="BackBtn">❮ BACK</system:String>
+    <system:String x:Key="DescTxt">DESCRIPTION</system:String>
+    <system:String x:Key="DirectorTxt">Director</system:String>
+    <system:String x:Key="ActorsTxt">Cast</system:String>
+    <system:String x:Key="WatchBtn">WATCH</system:String>
+    <system:String x:Key="WatchOfflineBtn">WATCH OFFLINE</system:String>
+
+    <system:String x:Key="VideoStep">Video rewind step</system:String>
+    <system:String x:Key="VideoStepDesc">Select skip time</system:String>
+    <system:String x:Key="DownloadedText">MOVIE DOWNLOADED</system:String>
+    
+
+</ResourceDictionary>
