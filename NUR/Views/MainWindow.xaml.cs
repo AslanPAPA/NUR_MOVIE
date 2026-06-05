@@ -101,28 +101,23 @@ namespace NUR.Views
                     }
                 }
 
-                // Проверяем интернет
                 bool hasInternet = await InternetHelper.HasInternet();
 
                 if (hasInternet)
                 {
-                    // Получаем свежие фильмы с сервера
                     var freshMovies = await GetMoviesAsync();
 
                     if (freshMovies != null)
                     {
                         _allMoviesFromApi = freshMovies;
 
-                        // Сохраняем в SQLite
                         DatabaseService.SaveMovies(_allMoviesFromApi);
 
-                        // Скачиваем постеры
                         foreach (var movie in _allMoviesFromApi)
                         {
                             await PosterManager.DownloadPoster(movie);
                         }
 
-                        // Подменяем URL постеров на локальные файлы
                         foreach (var movie in _allMoviesFromApi)
                         {
                             string localPoster =
@@ -134,7 +129,6 @@ namespace NUR.Views
                             }
                         }
 
-                        // Обновляем интерфейс уже с локальными постерами
                         UpdateHomeFormDisplay(_allMoviesFromApi);
                         FillFilters();
                     }
@@ -157,7 +151,6 @@ namespace NUR.Views
 
         private void FillFilters()
         {
-            // Очищаем перед заполнением (ВАЖНО, иначе будут дубли при повторных вызовах)
             GenreFilter.Items.Clear();
             ActorFilter.Items.Clear();
             YearFilter.Items.Clear();
@@ -171,8 +164,8 @@ namespace NUR.Views
                 .SelectMany(m => m.Genres ?? Enumerable.Empty<Genre>())
                 .Select(g => g.Name?.Trim())
                 .Where(name => !string.IsNullOrWhiteSpace(name))
-                .GroupBy(name => name.ToLower())   // убираем дубли независимо от регистра
-                .Select(g => g.First())            // сохраняем оригинальное написание
+                .GroupBy(name => name.ToLower())   
+                .Select(g => g.First())           
                 .OrderBy(name => name))
             {
                 GenreFilter.Items.Add(genre);
@@ -270,7 +263,7 @@ namespace NUR.Views
         }
         private void UpdateHomeFormDisplay(List<Movie> movies)
         {
-            if (movies == null) return; // Защита от пустого списка фильмов
+            if (movies == null) return; 
 
             int currentYear = 2026;
             var freshMovies = movies.Where(m => m.Year == currentYear).ToList();

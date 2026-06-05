@@ -26,7 +26,15 @@ CREATE TABLE IF NOT EXISTS Movies
     VideoUrl TEXT,
     Genres TEXT,
     Actors TEXT
-);";
+);
+
+CREATE TABLE IF NOT EXISTS Users
+(
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username TEXT UNIQUE,
+    PasswordHash TEXT
+);
+";
 
             using var command = new SqliteCommand(sql, connection);
             command.ExecuteNonQuery();
@@ -142,6 +150,52 @@ public static List<Movie> LoadMovies()
 
             return movies;
 
+        }
+
+        public static void SaveUser(string username, string passwordHash)
+        {
+            using var connection = new SqliteConnection($"Data Source={DbPath}");
+            connection.Open();
+
+            string sql = @"
+INSERT OR REPLACE INTO Users (Username, PasswordHash)
+VALUES (@Username, @PasswordHash);";
+
+            using var cmd = new SqliteCommand(sql, connection);
+
+            cmd.Parameters.AddWithValue("@Username", username);
+            cmd.Parameters.AddWithValue("@PasswordHash", passwordHash);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public static (string Username, string PasswordHash)? GetUser(string username, string password)
+        {
+            using var connection = new SqliteConnection($"Data Source={DbPath}");
+            connection.Open();
+
+            string sql = @"
+SELECT Username, PasswordHash 
+FROM Users 
+WHERE Username = @Username
+LIMIT 1;";
+
+            using var cmd = new SqliteCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@Username", username);
+
+            using var reader = cmd.ExecuteReader();
+
+            if (!reader.Read())
+                return null;
+
+            string dbUsername = reader.GetString(0);
+            string dbPasswordHash = reader.GetString(1);
+
+            // сравнение (пока упрощённо)
+            if (dbPasswordHash == password)
+                return (dbUsername, dbPasswordHash);
+
+            return null;
         }
     }
 }

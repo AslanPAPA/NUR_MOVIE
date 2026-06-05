@@ -16,7 +16,6 @@ namespace NUR.Views.LoginAndRegisterViews
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
             string username = txtLoginUsername.Text.Trim();
             string password = txtLoginPassword.Password;
 
@@ -34,6 +33,37 @@ namespace NUR.Views.LoginAndRegisterViews
 
             try
             {
+                bool hasInternet = await InternetHelper.HasInternet();
+
+                // =========================
+                // 🔴 OFFLINE LOGIN
+                // =========================
+                if (!hasInternet)
+                {
+                    var localUser = DatabaseService.GetUser(username, password);
+
+                    if (localUser != null)
+                    {
+                        UserSession.Username = localUser.Value.Username;
+
+                        MessageBox.Show("Оффлайн вход выполнен!");
+
+                        MainWindow mainWin = new MainWindow();
+                        mainWin.Show();
+
+                        Window.GetWindow(this)?.Close();
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Нет интернета и пользователь не найден локально");
+                        return;
+                    }
+                }
+
+                // =========================
+                // 🟢 ONLINE LOGIN
+                // =========================
                 var loginData = new
                 {
                     username = username,
@@ -55,19 +85,16 @@ namespace NUR.Views.LoginAndRegisterViews
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result =
-                        await response.Content.ReadAsStringAsync();
+                    var result = await response.Content.ReadAsStringAsync();
 
                     var loginResponse =
                         JsonSerializer.Deserialize<LoginResponse>(result);
 
                     ApiClient.SetToken(loginResponse.token, loginResponse.username);
 
-                    UserSession.Username =
-                        loginResponse.username;
-
+                    UserSession.Username = loginResponse.username;
+                    DatabaseService.SaveUser(username, password);
                     MessageBox.Show("Успешный вход!");
-
 
                     MainWindow mainWin = new MainWindow();
                     mainWin.Show();
@@ -79,15 +106,16 @@ namespace NUR.Views.LoginAndRegisterViews
                     MessageBox.Show("Неверный логин или пароль");
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Ошибка сети");
             }
             finally
             {
                 txtLoginUsername.IsEnabled = true;
                 txtLoginPassword.IsEnabled = true;
                 btnLogin.IsEnabled = true;
+                LoadingText.Visibility = Visibility.Collapsed;
             }
         }
     }
