@@ -38,9 +38,11 @@ namespace NUR.Views
 
             try
             {
-                string json =
-                    await ApiClient.Instance.GetStringAsync(
-                        "http://185.246.222.35:8080/api/favorites/");
+                if (!await InternetHelper.HasInternet())
+                    return;
+
+                string json = await ApiClient.Instance.GetStringAsync(
+                    "http://185.246.222.35:8080/api/favorites/");
 
                 var movies = JsonSerializer.Deserialize<List<Movie>>(
                     json,
@@ -49,14 +51,16 @@ namespace NUR.Views
                         PropertyNameCaseInsensitive = true
                     });
 
+                if (movies == null) return;
+
                 foreach (var movie in movies)
                 {
                     FavoriteMovies.Add(movie);
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Favorites error: " + ex.Message);
+                // оффлайн → просто ничего не показываем
             }
         }
 

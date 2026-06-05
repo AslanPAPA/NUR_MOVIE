@@ -6,8 +6,10 @@ namespace NUR.Data
 {
     public class ApiClient
     {
-        private static readonly HttpClient _client =
-            new HttpClient();
+        private static readonly HttpClient _client = new HttpClient()
+        {
+            Timeout = TimeSpan.FromSeconds(5)
+        };
 
         public static string Token { get; set; }
 

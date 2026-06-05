@@ -21,6 +21,8 @@
         </Grid.RowDefinitions>
 
 
+
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -132,13 +134,15 @@
                             </Border>
 
                         </Popup>
+
                     </StackPanel>
                 </Border>
 
 
 
                 <StackPanel
-                    Margin="0,0,20,0"
+                    Margin="0,0,0,0"
+                    Width="595"
                     Button.Click="MenuButton_Click"
                     Orientation="Horizontal">
                     <Button
@@ -171,8 +175,27 @@
                         FontWeight="DemiBold"
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
+                    <Border
+                        x:Name="OfflineBanner"
+                        Width="100"
+                        Height="20"
+                        Panel.ZIndex="999"
+                        Margin="10,0,0,0"
+                        CornerRadius="10"
+                        Background="#D32F2F"
+                        Visibility="Visible">
 
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="8"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="📡 ОФФЛАЙН РЕЖИМ"
+                            TextWrapping="Wrap" />
+                    </Border>
                 </StackPanel>
+
             </StackPanel>
 
             <StackPanel

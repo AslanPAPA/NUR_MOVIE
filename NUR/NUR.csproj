@@ -20,11 +20,7 @@
   <ItemGroup>
     <PackageReference Include="Flyleaf.FFmpeg.Bindings" Version="8.1.0" />
     <PackageReference Include="FlyleafLib" Version="3.10.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
   </ItemGroup>
 

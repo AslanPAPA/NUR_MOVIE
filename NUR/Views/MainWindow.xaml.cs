@@ -16,6 +16,8 @@ namespace NUR.Views
         public List<Movie> AllMovies => _allMoviesFromApi;
         private DispatcherTimer _searchTimer;
         private bool _ignoreSearchTextChanged;
+        private bool _isOffline = false;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -24,6 +26,21 @@ namespace NUR.Views
             _searchTimer = new DispatcherTimer();
             _searchTimer.Interval = TimeSpan.FromMilliseconds(300);
             _searchTimer.Tick += SearchTimer_Tick;
+        }
+
+        private void SetOfflineMode(bool isOffline)
+        {
+            _isOffline = isOffline;
+
+            OfflineBanner.Visibility =
+                isOffline ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private async Task CheckInternetAndUpdateUI()
+        {
+            bool hasInternet = await InternetHelper.HasInternet();
+
+            SetOfflineMode(!hasInternet);
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -44,20 +61,97 @@ namespace NUR.Views
             videoForm.Visibility = Visibility.Visible;
         }
 
+        private async void StartInternetWatcher()
+        {
+            while (true)
+            {
+                await CheckInternetAndUpdateUI();
+                await Task.Delay(5000); // каждые 5 сек
+            }
+        }
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            await CheckInternetAndUpdateUI();
+            StartInternetWatcher();
             try
             {
-                _allMoviesFromApi = await GetMoviesAsync();
-                FillFilters();
+                // Сначала загружаем фильмы из локальной базы
+                _allMoviesFromApi = DatabaseService.LoadMovies();
+
+
                 if (_allMoviesFromApi != null)
                 {
-                    UpdateHomeFormDisplay(_allMoviesFromApi);
+                    foreach (var movie in _allMoviesFromApi)
+                    {
+
+                       
+                        string localPoster =
+                            PosterManager.GetLocalPoster(movie.Id);
+
+                        if (File.Exists(localPoster))
+                        {
+                            movie.Poster = localPoster;
+                        }
+                    }
+
+                    if (_allMoviesFromApi.Any())
+                    {
+                        UpdateHomeFormDisplay(_allMoviesFromApi);
+                        FillFilters();
+                    }
+                }
+
+                // Проверяем интернет
+                bool hasInternet = await InternetHelper.HasInternet();
+
+                if (hasInternet)
+                {
+                    // Получаем свежие фильмы с сервера
+                    var freshMovies = await GetMoviesAsync();
+
+                    if (freshMovies != null)
+                    {
+                        _allMoviesFromApi = freshMovies;
+
+                        // Сохраняем в SQLite
+                        DatabaseService.SaveMovies(_allMoviesFromApi);
+
+                        // Скачиваем постеры
+                        foreach (var movie in _allMoviesFromApi)
+                        {
+                            await PosterManager.DownloadPoster(movie);
+                        }
+
+                        // Подменяем URL постеров на локальные файлы
+                        foreach (var movie in _allMoviesFromApi)
+                        {
+                            string localPoster =
+                                PosterManager.GetLocalPoster(movie.Id);
+
+                            if (File.Exists(localPoster))
+                            {
+                                movie.Poster = localPoster;
+                            }
+                        }
+
+                        // Обновляем интерфейс уже с локальными постерами
+                        UpdateHomeFormDisplay(_allMoviesFromApi);
+                        FillFilters();
+                    }
+                }
+                else
+                {
+                    if (_allMoviesFromApi == null || !_allMoviesFromApi.Any())
+                    {
+                        MessageBox.Show(
+                            "Нет подключения к интернету, и локальная база пуста. Подключитесь к сети для первого запуска.");
+                    }
+
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка загрузки: {ex.Message}");
+                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}");
             }
         }
 
@@ -176,6 +270,8 @@ namespace NUR.Views
         }
         private void UpdateHomeFormDisplay(List<Movie> movies)
         {
+            if (movies == null) return; // Защита от пустого списка фильмов
+
             int currentYear = 2026;
             var freshMovies = movies.Where(m => m.Year == currentYear).ToList();
 
@@ -184,7 +280,7 @@ namespace NUR.Views
                 .Select(name => new GenreGroup
                 {
                     GenreName = name.ToUpper(),
-                    Movies = movies.Where(m => m.Genres.Any(g => g.Name == name)).ToList()
+                    Movies = movies.Where(m => m.Genres != null && m.Genres.Any(g => g.Name == name)).ToList()
                 })
                 .Where(g => g.Movies.Any()).ToList();
 

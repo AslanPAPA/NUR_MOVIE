@@ -11,6 +11,7 @@ namespace NUR
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            DatabaseService.Initialize();
 
             try
             {
