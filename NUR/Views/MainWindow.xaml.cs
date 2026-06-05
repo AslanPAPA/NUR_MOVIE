@@ -13,6 +13,7 @@ namespace NUR.Views
     public partial class MainWindow : Window
     {
         private List<Movie> _allMoviesFromApi;
+        public List<Movie> AllMovies => _allMoviesFromApi;
         private DispatcherTimer _searchTimer;
         private bool _ignoreSearchTextChanged;
         public MainWindow()
@@ -169,6 +170,8 @@ namespace NUR.Views
                 return JsonSerializer.Deserialize<List<Movie>>(response, options);
         }
 
+
+
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             if (e.OriginalSource is Button clickedButton)
@@ -190,7 +193,10 @@ namespace NUR.Views
                         ShowForm(userProfile);
                         break;
                     case "Избранное":
+
+                        favoritesForm.LoadFavorites();
                         ShowForm(favoritesForm);
+
                         break;
                 }
             }
@@ -253,6 +259,11 @@ namespace NUR.Views
             _searchTimer.Stop();
             _searchTimer.Start();
         }
+
+        public void RefreshFavorites()
+{
+    favoritesForm.LoadFavorites();
+}
 
         private void SearchTimer_Tick(object? sender, EventArgs e)
         {

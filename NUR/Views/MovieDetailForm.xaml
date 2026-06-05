@@ -100,13 +100,29 @@
                                     Background="Transparent"
                                     BorderThickness="0"
                                     Cursor="Hand"
+                                    Click="BtnFavorite_Click"
                                     Style="{StaticResource ButtonRoundStyle}">
                                     <Image
                                         x:Name="FavIcon"
                                         Width="50"
                                         Height="50"
-                                        Source="/Assets/images/no_full_hearе.png" />
+                                        Source="/Assets/images/no_full_heart.png" />
                                 </Button>
+
+                                <Button
+                                    x:Name="BtnDownload"
+                                    Width="200"
+                                    Height="50"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Background="#FFD700"
+                                    Click="BtnDownload_Click"
+                                    Content="СМОТРЕТЬ ОФФЛАЙН"
+                                    Cursor="Hand"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="Black"
+                                    Style="{StaticResource WatchBtnStyle}" />
 
                             </StackPanel>
 
@@ -114,20 +130,7 @@
 
                         </StackPanel>
 
-                        <Button
-                            x:Name="BtnDownload"
-                            Width="220"
-                            Height="50"
-                            HorizontalAlignment="Left"
-                            Background="#FFD700"
-                            Click="BtnDownload_Click"
-                            Content="СМОТРЕТЬ ОФФЛАЙН"
-                            Cursor="Hand"
-                            FontSize="18"
-                            VerticalAlignment="Bottom"
-                            FontWeight="Bold"
-                            Foreground="Black"
-                            Style="{StaticResource WatchBtnStyle}" />
+
 
                     </StackPanel>
 

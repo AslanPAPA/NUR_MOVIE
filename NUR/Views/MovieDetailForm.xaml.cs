@@ -1,10 +1,10 @@
 ﻿using NUR.Data;
 using NUR.Models;
-using System.Diagnostics;
 using System.IO;
-using System.Net.Http;
+using System.Net.Http.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace NUR.Views
 {
@@ -17,9 +17,10 @@ namespace NUR.Views
             this.Loaded += MovieDetailForm_Loaded;
         }
 
-        private void MovieDetailForm_Loaded(object sender, RoutedEventArgs e)
+        private async void MovieDetailForm_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateDownloadButton();
+            await UpdateFavoriteButton();
         }
 
         private void UpdateDownloadButton()
@@ -29,7 +30,7 @@ namespace NUR.Views
 
             bool isDownloaded = DownloadManager.IsDownloaded(movie.Id);
 
-            BtnDownload.IsEnabled = !isDownloaded; // Кнопка перестает нажиматься, если файл есть
+            BtnDownload.IsEnabled = !isDownloaded;
 
             if (isDownloaded)
             {
@@ -52,18 +53,14 @@ namespace NUR.Views
             var movie = this.DataContext as Movie;
             if (movie == null) return;
 
-            // ВАЖНО: Проверяем, скачан ли файл, ПЕРЕД тем как открывать окно
             if (DownloadManager.IsDownloaded(movie.Id))
             {
-                // Если уже скачан, вообще не открываем окно!
                 return;
             }
 
-            // Если не скачан — открываем окно загрузки
             DownloadWindow downloadWin = new DownloadWindow(movie.VideoUrl, movie.Id);
             downloadWin.ShowDialog();
 
-            // Обновляем состояние кнопки после закрытия окна
             UpdateDownloadButton();
         }
 
@@ -85,11 +82,9 @@ namespace NUR.Views
             var mainWindow = Window.GetWindow(this) as MainWindow;
             if (mainWindow == null) return;
 
-            // Проверяем: если скачано - берем локальный путь, если нет - онлайн ссылку
             if (DownloadManager.IsDownloaded(movie.Id))
             {
                 string localPath = DownloadManager.GetLocalPath(movie.Id);
-                // Дополнительная проверка на случай, если файл удалили вручную из папки
                 if (File.Exists(localPath))
                 {
                     mainWindow.StartPlayer(localPath);
@@ -115,7 +110,68 @@ namespace NUR.Views
             if ((bool)e.NewValue)
             {
                 UpdateDownloadButton();
+                UpdateFavoriteButton();
             }
+        }
+
+        private async Task UpdateFavoriteButton()
+        {
+            var movie = DataContext as Movie;
+
+            if (movie == null)
+                return;
+
+            string json =
+                await ApiClient.Instance.GetStringAsync(
+                    $"http://185.246.222.35:8080/api/favorites/{movie.Id}/");
+
+            bool isFavorite =
+                json.Contains("\"is_favorite\":true");
+
+            FavIcon.Source = new BitmapImage(
+                new Uri(
+                    isFavorite
+                        ? "/Assets/images/full_heart.png"
+                        : "/Assets/images/no_full_heart.png",
+                    UriKind.Relative));
+        }
+
+        private void UpdateFavoriteIcon(bool isFavorite)
+        {
+            FavIcon.Source = new BitmapImage(
+                new Uri(
+                    isFavorite
+                        ? "/Assets/images/full_heart.png"
+                        : "/Assets/images/no_full_heart.png",
+                    UriKind.Relative));
+        }
+
+        private async void BtnFavorite_Click(object sender, RoutedEventArgs e)
+        {
+            var movie = DataContext as Movie;
+            if (movie == null) return;
+
+            var client = ApiClient.Instance;
+
+            var response = await client.PostAsJsonAsync(
+                "http://185.246.222.35:8080/api/favorites/toggle/",
+                new { movie_id = movie.Id }
+            );
+
+            if (!response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Ошибка сервера");
+                return;
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            bool isFavorite = json.Contains("true");
+
+            UpdateFavoriteIcon(isFavorite);
+
+            var main = Application.Current.MainWindow as MainWindow;
+            main?.RefreshFavorites();
         }
     }
 }
