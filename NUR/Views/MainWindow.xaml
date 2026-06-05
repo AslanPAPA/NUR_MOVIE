@@ -95,15 +95,27 @@
 
                                     <TextBlock Foreground="White" Text="Жанр" />
 
-                                    <ComboBox x:Name="GenreFilter" Margin="0,5,0,10" />
+                                    <ComboBox
+                                        x:Name="GenreFilter"
+                                        Height="25"
+                                        Margin="0,0,0,10"
+                                        Style="{DynamicResource ComboBox}" />
 
                                     <TextBlock Foreground="White" Text="Актёр" />
 
-                                    <ComboBox x:Name="ActorFilter" Margin="0,5,0,10" />
+                                    <ComboBox
+                                        x:Name="ActorFilter"
+                                        Height="25"
+                                        Margin="0,0,0,10"
+                                        Style="{DynamicResource ComboBox}" />
 
                                     <TextBlock Foreground="White" Text="Год" />
 
-                                    <ComboBox x:Name="YearFilter" Margin="0,5,0,15" />
+                                    <ComboBox
+                                        x:Name="YearFilter"
+                                        Height="25"
+                                        Margin="0,0,0,15"
+                                        Style="{DynamicResource ComboBox}" />
 
                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
@@ -137,7 +149,7 @@
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
 
-                    
+
                     <Button
                         Width="110"
                         Content="Настройки"
@@ -183,7 +195,7 @@
             <local:SettingsForm x:Name="settingsForm" Visibility="Collapsed" />
             <local:UserProfile x:Name="userProfile" Visibility="Collapsed" />
             <local:MovieDetailForm x:Name="movieDetailForm" Visibility="Collapsed" />
-            <local:FavoritesForm x:Name="favoritesForm" Visibility="Collapsed"/>
+            <local:FavoritesForm x:Name="favoritesForm" Visibility="Collapsed" />
             <local:SearchResultsForm x:Name="searchResultsForm" Visibility="Collapsed" />
         </Grid>
 

@@ -54,7 +54,8 @@
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontSize="14"
-                        SelectedIndex="1">
+                        SelectedIndex="1"
+                        Style="{DynamicResource ComboBox}">
                         <ComboBoxItem Content="5 сек" />
                         <ComboBoxItem Content="10 сек" />
                         <ComboBoxItem Content="15 сек" />

@@ -63,38 +63,57 @@ namespace NUR.Views
 
         private void FillFilters()
         {
+            // Очищаем перед заполнением (ВАЖНО, иначе будут дубли при повторных вызовах)
+            GenreFilter.Items.Clear();
+            ActorFilter.Items.Clear();
+            YearFilter.Items.Clear();
+
+            // =======================
+            // ЖАНРЫ
+            // =======================
             GenreFilter.Items.Add("Все жанры");
 
             foreach (var genre in _allMoviesFromApi
-                .SelectMany(m => m.Genres)
-                .Select(g => g.Name)
-                .Distinct()
-                .OrderBy(x => x))
+                .SelectMany(m => m.Genres ?? Enumerable.Empty<Genre>())
+                .Select(g => g.Name?.Trim())
+                .Where(name => !string.IsNullOrWhiteSpace(name))
+                .GroupBy(name => name.ToLower())   // убираем дубли независимо от регистра
+                .Select(g => g.First())            // сохраняем оригинальное написание
+                .OrderBy(name => name))
             {
                 GenreFilter.Items.Add(genre);
             }
 
             GenreFilter.SelectedIndex = 0;
 
+            // =======================
+            // АКТЁРЫ
+            // =======================
             ActorFilter.Items.Add("Все актёры");
 
             foreach (var actor in _allMoviesFromApi
-                .SelectMany(m => m.Actors)
-                .Select(a => a.Name)
-                .Distinct()
-                .OrderBy(x => x))
+                .SelectMany(m => m.Actors ?? Enumerable.Empty<Actor>())
+                .Select(a => a.Name?.Trim())
+                .Where(name => !string.IsNullOrWhiteSpace(name))
+                .GroupBy(name => name.ToLower())   // убираем дубли
+                .Select(g => g.First())
+                .OrderBy(name => name))
             {
                 ActorFilter.Items.Add(actor);
             }
 
             ActorFilter.SelectedIndex = 0;
 
+            // =======================
+            // ГОДЫ
+            // =======================
             YearFilter.Items.Add("Все годы");
 
             foreach (var year in _allMoviesFromApi
                 .Select(m => m.Year)
+                .Where(y => y > 0)
                 .Distinct()
-                .OrderByDescending(x => x))
+                .OrderByDescending(y => y))
             {
                 YearFilter.Items.Add(year);
             }
@@ -106,22 +125,33 @@ namespace NUR.Views
         {
             IEnumerable<Movie> filtered = _allMoviesFromApi;
 
+            // =======================
+            // ЖАНР (стандарт: фильм может иметь несколько жанров)
+            // =======================
             if (GenreFilter.SelectedIndex > 0)
             {
                 string genre = GenreFilter.SelectedItem.ToString();
 
                 filtered = filtered.Where(m =>
+                    m.Genres != null &&
                     m.Genres.Any(g => g.Name == genre));
             }
 
+            // =======================
+            // АКТЁР (стандарт)
+            // =======================
             if (ActorFilter.SelectedIndex > 0)
             {
                 string actor = ActorFilter.SelectedItem.ToString();
 
                 filtered = filtered.Where(m =>
+                    m.Actors != null &&
                     m.Actors.Any(a => a.Name == actor));
             }
 
+            // =======================
+            // ГОД
+            // =======================
             if (YearFilter.SelectedIndex > 0)
             {
                 int year = Convert.ToInt32(YearFilter.SelectedItem);
@@ -129,7 +159,9 @@ namespace NUR.Views
                 filtered = filtered.Where(m => m.Year == year);
             }
 
-            UpdateHomeFormDisplay(filtered.ToList());
+            var resultList = filtered.ToList();
+
+            UpdateHomeFormDisplay(resultList);
 
             FilterPopup.IsOpen = false;
         }
