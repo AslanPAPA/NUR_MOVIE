@@ -177,35 +177,7 @@
                         </StackPanel>
 
                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <Button
-                                x:Name="btnQuality"
-                                Grid.Column="2"
-                                Width="45"
-                                Height="35"
-                                Margin="0,0,5,0"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Click="btnQuality_Click"
-                                Content="1080p"
-                                Cursor="Hand"
-                                FontSize="13"
-                                FontWeight="Bold"
-                                Foreground="White"
-                                Style="{DynamicResource RoundMediaButtonStyle}">
-                                <Button.ContextMenu>
-                                    <ContextMenu
-                                        x:Name="qualityMenu"
-                                        Background="#1A1A1A"
-                                        BorderBrush="#333333">
-                                        <ContextMenu.Resources>
-                                            <Style TargetType="MenuItem">
-                                                <Setter Property="Foreground" Value="White" />
-                                                <Setter Property="Background" Value="#1A1A1A" />
-                                            </Style>
-                                        </ContextMenu.Resources>
-                                    </ContextMenu>
-                                </Button.ContextMenu>
-                            </Button>
+                           
 
                             <Button
                                 x:Name="btnFullScreen"
