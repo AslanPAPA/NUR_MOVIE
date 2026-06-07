@@ -16,6 +16,8 @@ namespace NUR.Views.LoginAndRegisterViews
 
         private async void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+          
+
             txtRegUsername.IsEnabled = false;
             txtRegEmail.IsEnabled = false;
             txtRegPassword.IsEnabled = false;
@@ -23,6 +25,16 @@ namespace NUR.Views.LoginAndRegisterViews
             btnRegister.IsEnabled = false;
 
             LoadingText.Visibility = Visibility.Visible;
+            bool hasInternet = await InternetHelper.HasInternet();
+
+            if (!hasInternet)
+            {
+                MessageBox.Show(
+                    "Для регистрации необходимо подключение к интернету.");
+                LoadingText.Visibility = Visibility.Collapsed;
+
+                return;
+            }
 
             try
             {

@@ -41,12 +41,52 @@
                     Foreground="#FDDD2D" />
 
                 <Button
+                    x:Name="BtnCatalog"
                     Width="110"
                     HorizontalAlignment="Left"
+                    Click="BtnCatalog_Click"
                     Content="⋮ Каталог"
                     FontSize="15"
                     FontWeight="DemiBold"
                     Style="{StaticResource ButtonRoundStyle}" />
+                <Popup
+                    x:Name="CatalogPopup"
+                    Placement="Bottom"
+                    PlacementTarget="{Binding ElementName=BtnCatalog}"
+                    StaysOpen="False">
+
+                    <Border
+                        Padding="10"
+                        Background="#222"
+                        BorderBrush="#444"
+                        BorderThickness="1">
+
+                        <StackPanel Width="180">
+                            <Button
+                                x:Name="BtnAllCatalog"
+                                Margin="0,0,0,5"
+                                Click="AllCatalog_Click"
+                                Content="✔ Все"
+                                Style="{StaticResource CatalogMenuButtonStyle}" />
+
+                            <Button
+                                x:Name="BtnMoviesCatalog"
+                                Margin="0,0,0,5"
+                                Click="MoviesCatalog_Click"
+                                Content="Фильмы"
+                                Style="{StaticResource CatalogMenuButtonStyle}" />
+
+                            <Button
+                                x:Name="BtnCartoonsCatalog"
+                                Margin="0,0,0,5"
+                                Click="CartoonsCatalog_Click"
+                                Content="Мультфильмы"
+                                Style="{StaticResource CatalogMenuButtonStyle}" />
+                        </StackPanel>
+
+                    </Border>
+
+                </Popup>
                 <Border
                     Margin="20,0,20,0"
                     Background="#1F2020"
@@ -141,13 +181,13 @@
 
 
                 <StackPanel
-                    Margin="0,0,0,0"
                     Width="595"
+                    Margin="0,0,0,0"
                     Button.Click="MenuButton_Click"
                     Orientation="Horizontal">
                     <Button
                         Width="110"
-                        Content="Главная"
+                        Content="{DynamicResource MainBtn}"
                         FontSize="15"
                         FontWeight="DemiBold"
                         Foreground="White"
@@ -156,21 +196,21 @@
 
                     <Button
                         Width="110"
-                        Content="Настройки"
+                        Content="{DynamicResource SettingsBtn}"
                         FontSize="15"
                         FontWeight="DemiBold"
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
                     <Button
                         Width="110"
-                        Content="Профиль"
+                        Content="{DynamicResource ProfileBtn}"
                         FontSize="15"
                         FontWeight="DemiBold"
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
                     <Button
                         Width="110"
-                        Content="Избранное"
+                        Content="{DynamicResource FavoriteBtn}"
                         FontSize="15"
                         FontWeight="DemiBold"
                         Foreground="White"
@@ -179,10 +219,10 @@
                         x:Name="OfflineBanner"
                         Width="100"
                         Height="20"
-                        Panel.ZIndex="999"
                         Margin="10,0,0,0"
-                        CornerRadius="10"
+                        Panel.ZIndex="999"
                         Background="#D32F2F"
+                        CornerRadius="10"
                         Visibility="Visible">
 
                         <TextBlock

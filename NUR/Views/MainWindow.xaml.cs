@@ -17,7 +17,8 @@ namespace NUR.Views
         private DispatcherTimer _searchTimer;
         private bool _ignoreSearchTextChanged;
         private bool _isOffline = false;
-        
+        private string _currentCatalog = "Все";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -268,7 +269,7 @@ namespace NUR.Views
             int currentYear = 2026;
             var freshMovies = movies.Where(m => m.Year == currentYear).ToList();
 
-            var interestingGenres = new List<string> { "Боевик", "Комедия", "Фантастика", "Драма" };
+            var interestingGenres = new List<string> { "Боевик", "Комедия", "Фантастика", "Драма", "Приключения", "Триллер", "Криминал", "Фэнтези", "Детектив", "Мультфильмы" };
             var groupedData = interestingGenres
                 .Select(name => new GenreGroup
                 {
@@ -427,6 +428,71 @@ namespace NUR.Views
             ShowForm(searchResultsForm);
         }
 
+        private void BtnCatalog_Click(object sender, RoutedEventArgs e)
+        {
+            CatalogPopup.IsOpen = true;
+        }
+
+        private void UpdateCatalogMenu()
+        {
+            BtnAllCatalog.Content =
+                _currentCatalog == "Все"
+                    ? "✔ Все"
+                    : "Все";
+
+            BtnMoviesCatalog.Content =
+                _currentCatalog == "Фильмы"
+                    ? "✔ Фильмы"
+                    : "Фильмы";
+
+            BtnCartoonsCatalog.Content =
+                _currentCatalog == "Мультфильмы"
+                    ? "✔ Мультфильмы"
+                    : "Мультфильмы";
+        }
+
+        private void MoviesCatalog_Click(object sender, RoutedEventArgs e)
+        {
+            _currentCatalog = "Фильмы";
+
+            UpdateCatalogMenu();
+
+            var movies = _allMoviesFromApi
+                .Where(m => m.Genres == null ||
+                       !m.Genres.Any(g => g.Name == "Мультфильмы"))
+                .ToList();
+
+            UpdateHomeFormDisplay(movies);
+
+            CatalogPopup.IsOpen = false;
+        }
+
+        private void CartoonsCatalog_Click(object sender, RoutedEventArgs e)
+        {
+            _currentCatalog = "Мультфильмы";
+
+            UpdateCatalogMenu();
+
+            var cartoons = _allMoviesFromApi
+                .Where(m => m.Genres != null &&
+                       m.Genres.Any(g => g.Name == "Мультфильмы"))
+                .ToList();
+
+            UpdateHomeFormDisplay(cartoons);
+
+            CatalogPopup.IsOpen = false;
+        }
+
+        private void AllCatalog_Click(object sender, RoutedEventArgs e)
+        {
+            _currentCatalog = "Все";
+
+            UpdateCatalogMenu();
+
+            UpdateHomeFormDisplay(_allMoviesFromApi);
+
+            CatalogPopup.IsOpen = false;
+        }
     }
    
 }

@@ -591,4 +591,59 @@
         </Setter>
     </Style>
 
+    <Style
+    x:Key="CatalogMenuButtonStyle"
+    TargetType="Button">
+
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Cursor" Value="Hand" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Border
+                    x:Name="Border"
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="8">
+
+                        <ContentPresenter
+                        Margin="5,0"
+                        VerticalAlignment="Center" />
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter
+                            TargetName="Border"
+                            Property="Background"
+                            Value="#333333" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter
+                            TargetName="Border"
+                            Property="Background"
+                            Value="#FFD700" />
+                            <Setter
+                            Property="Foreground"
+                            Value="Black" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
 </ResourceDictionary>

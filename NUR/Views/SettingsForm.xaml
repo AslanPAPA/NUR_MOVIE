@@ -38,12 +38,12 @@
                             FontSize="16"
                             FontWeight="SemiBold"
                             Foreground="White"
-                            Text="Шаг перемотки видео" />
+                            Text="{DynamicResource VideoStep}" />
                         <TextBlock
                             Margin="0,5,0,0"
                             FontSize="12"
                             Foreground="Gray"
-                            Text="Интервал времени при нажатии на стрелки клавиатуры" />
+                            Text="{DynamicResource VideoStepDesc}" />
                     </StackPanel>
 
                     <ComboBox
@@ -59,6 +59,88 @@
                         <ComboBoxItem Content="5 сек" />
                         <ComboBoxItem Content="10 сек" />
                         <ComboBoxItem Content="15 сек" />
+                    </ComboBox>
+                </Grid>
+            </Border>
+
+            <Border
+                Margin="0,0,0,20"
+                Padding="20"
+                Background="#1F2020"
+                CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Text="{DynamicResource LangApp}" />
+                        <TextBlock
+                            Margin="0,5,0,0"
+                            FontSize="12"
+                            Foreground="Gray"
+                            Text="{DynamicResource LangAppDesc}" />
+                    </StackPanel>
+
+                    <ComboBox
+                        x:Name="ComboSkwsipTime"
+                        Grid.Column="1"
+                        Width="100"
+                        Height="35"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="14"
+                        SelectedIndex="1"
+                        Style="{DynamicResource ComboBox}">
+                        <ComboBoxItem Content="Английский" />
+                        <ComboBoxItem Content="Русский" />
+                    </ComboBox>
+                </Grid>
+            </Border>
+
+            <Border
+                Margin="0,0,0,20"
+                Padding="20"
+                Background="#1F2020"
+                CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Text="Скорость воспроизведения" />
+                        <TextBlock
+                            Margin="0,5,0,0"
+                            FontSize="12"
+                            Foreground="Gray"
+                            Text="Скорость просмотра фильма " />
+                    </StackPanel>
+
+                    <ComboBox
+                        x:Name="ComboSkwsipwTime"
+                        Grid.Column="1"
+                        Width="100"
+                        Height="35"
+                   
+                        FontSize="14"
+                        SelectedIndex="1"
+                        Style="{DynamicResource ComboBox}">
+                        <ComboBoxItem 
+                            Content="0.5x" />
+                        <ComboBoxItem Content="1x" />
+                        <ComboBoxItem Content="1.5x" />
+                        <ComboBoxItem Content="2x" />
                     </ComboBox>
                 </Grid>
             </Border>

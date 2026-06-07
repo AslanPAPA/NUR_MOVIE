@@ -83,7 +83,7 @@
                                     HorizontalAlignment="Left"
                                     Background="#FFD700"
                                     Click="BtnWatch_Click"
-                                    Content="СМОТРЕТЬ"
+                                    Content="{DynamicResource WatchBtn}"
                                     Cursor="Hand"
                                     FontSize="18"
                                     FontWeight="Bold"
@@ -117,7 +117,7 @@
                                     VerticalAlignment="Bottom"
                                     Background="#FFD700"
                                     Click="BtnDownload_Click"
-                                    Content="СМОТРЕТЬ ОФФЛАЙН"
+                                    Content="{DynamicResource WatchOfflineBtn}"
                                     Cursor="Hand"
                                     FontSize="16"
                                     FontWeight="Bold"
@@ -143,7 +143,7 @@
                         FontSize="22"
                         FontWeight="Medium"
                         Foreground="#FFD700"
-                        Text="ОПИСАНИЕ" />
+                        Text="{DynamicResource DescTxt}" />
                     <TextBlock
                         FontSize="16"
                         Foreground="White"
@@ -163,12 +163,12 @@
                                 Margin="0,5"
                                 FontSize="14"
                                 Foreground="Gray"
-                                Text="Режиссер:" />
+                                Text="{DynamicResource DirectorTxt}" />
                             <TextBlock
                                 Margin="0,5"
                                 FontSize="14"
                                 Foreground="Gray"
-                                Text="Актеры:" />
+                                Text="{DynamicResource ActorsTxt}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Margin="10,0,0,0">
@@ -196,7 +196,7 @@
             Background="Transparent"
             BorderThickness="0"
             Click="BtnBack_Click"
-            Content="❮ НАЗАД"
+            Content="{DynamicResource BackBtn}"
             Cursor="Hand"
             FontSize="14"
             Foreground="White"
