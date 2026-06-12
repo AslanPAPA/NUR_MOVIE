@@ -136,7 +136,7 @@ namespace NUR.Views
                 lastPosition = TimeSpan.FromMilliseconds(player.CurTime);
                 player.Pause();
             }
-
+            
             var mainWindow = Window.GetWindow(this) as MainWindow;
             mainWindow?.ShowForm(mainWindow.movieDetailForm);
         }

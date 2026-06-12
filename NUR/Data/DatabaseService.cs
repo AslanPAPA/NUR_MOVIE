@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using NUR.Models;
 using System.Text.Json;
+using System.IO;
 
 namespace NUR.Data
 {
@@ -8,15 +9,28 @@ namespace NUR.Data
     {
         private static readonly string DbPath = "nur.db";
 
+        // =========================
+        // INIT DATABASE
+        // =========================
         public static void Initialize()
         {
-            using var connection =
-                new SqliteConnection($"Data Source={DbPath}");
-
+            using var connection = new SqliteConnection($"Data Source={DbPath}");
             connection.Open();
 
             string sql = @"
 CREATE TABLE IF NOT EXISTS Movies
+(
+    Id INTEGER PRIMARY KEY,
+    Title TEXT,
+    Description TEXT,
+    Year INTEGER,
+    PosterUrl TEXT,
+    VideoUrl TEXT,
+    Genres TEXT,
+    Actors TEXT
+);
+
+CREATE TABLE IF NOT EXISTS History
 (
     Id INTEGER PRIMARY KEY,
     Title TEXT,
@@ -36,42 +50,25 @@ CREATE TABLE IF NOT EXISTS Users
 );
 ";
 
-            using var command = new SqliteCommand(sql, connection);
-            command.ExecuteNonQuery();
+            using var cmd = new SqliteCommand(sql, connection);
+            cmd.ExecuteNonQuery();
         }
 
+        // =========================
+        // MOVIES
+        // =========================
         public static void SaveMovies(List<Movie> movies)
         {
-            using var connection =
-                new SqliteConnection($"Data Source={DbPath}");
-
+            using var connection = new SqliteConnection($"Data Source={DbPath}");
             connection.Open();
 
             foreach (var movie in movies)
             {
                 string sql = @"
 INSERT OR REPLACE INTO Movies
-(
-    Id,
-    Title,
-    Description,
-    Year,
-    PosterUrl,
-    VideoUrl,
-    Genres,
-    Actors
-)
+(Id, Title, Description, Year, PosterUrl, VideoUrl, Genres, Actors)
 VALUES
-(
-    @Id,
-    @Title,
-    @Description,
-    @Year,
-    @PosterUrl,
-    @VideoUrl,
-    @Genres,
-    @Actors
-)";
+(@Id, @Title, @Description, @Year, @PosterUrl, @VideoUrl, @Genres, @Actors)";
 
                 using var cmd = new SqliteCommand(sql, connection);
 
@@ -81,51 +78,27 @@ VALUES
                 cmd.Parameters.AddWithValue("@Year", movie.Year);
                 cmd.Parameters.AddWithValue("@PosterUrl", movie.Poster ?? "");
                 cmd.Parameters.AddWithValue("@VideoUrl", movie.VideoUrl ?? "");
-                cmd.Parameters.AddWithValue(
-    "@Genres",
-    JsonSerializer.Serialize(movie.Genres ?? new List<Genre>()));
-
-                cmd.Parameters.AddWithValue(
-                    "@Actors",
-                    JsonSerializer.Serialize(movie.Actors ?? new List<Actor>()));
+                cmd.Parameters.AddWithValue("@Genres", JsonSerializer.Serialize(movie.Genres ?? new()));
+                cmd.Parameters.AddWithValue("@Actors", JsonSerializer.Serialize(movie.Actors ?? new()));
 
                 cmd.ExecuteNonQuery();
             }
         }
 
-
-public static List<Movie> LoadMovies()
-
+        public static List<Movie> LoadMovies()
         {
-
             List<Movie> movies = new();
 
-
-
-            using var connection =
-
-                new SqliteConnection($"Data Source={DbPath}");
-
-
-
+            using var connection = new SqliteConnection($"Data Source={DbPath}");
             connection.Open();
-
-
 
             string sql = "SELECT * FROM Movies";
 
-
-
             using var cmd = new SqliteCommand(sql, connection);
-
             using var reader = cmd.ExecuteReader();
 
-
-
             while (reader.Read())
-
             {
-
                 movies.Add(new Movie
                 {
                     Id = reader.GetInt32(0),
@@ -136,22 +109,102 @@ public static List<Movie> LoadMovies()
                     VideoUrl = reader.GetString(5),
 
                     Genres = !reader.IsDBNull(6)
-        ? JsonSerializer.Deserialize<List<Genre>>(reader.GetString(6)) ?? new()
-        : new(),
+                        ? JsonSerializer.Deserialize<List<Genre>>(reader.GetString(6)) ?? new()
+                        : new(),
 
                     Actors = !reader.IsDBNull(7)
-        ? JsonSerializer.Deserialize<List<Actor>>(reader.GetString(7)) ?? new()
-        : new()
+                        ? JsonSerializer.Deserialize<List<Actor>>(reader.GetString(7)) ?? new()
+                        : new()
                 });
-
             }
 
-
-
             return movies;
-
         }
 
+        // =========================
+        // HISTORY
+        // =========================
+        public static void SaveHistory(Movie movie)
+        {
+            if (movie == null) return;
+
+            using var connection = new SqliteConnection($"Data Source={DbPath}");
+            connection.Open();
+
+            string sql = @"
+INSERT OR REPLACE INTO History
+(Id, Title, Description, Year, PosterUrl, VideoUrl, Genres, Actors)
+VALUES
+(@Id, @Title, @Description, @Year, @PosterUrl, @VideoUrl, @Genres, @Actors)";
+
+            using var cmd = new SqliteCommand(sql, connection);
+
+            cmd.Parameters.AddWithValue("@Id", movie.Id);
+            cmd.Parameters.AddWithValue("@Title", movie.Title ?? "");
+            cmd.Parameters.AddWithValue("@Description", movie.Description ?? "");
+            cmd.Parameters.AddWithValue("@Year", movie.Year);
+            cmd.Parameters.AddWithValue("@PosterUrl", movie.Poster ?? "");
+            cmd.Parameters.AddWithValue("@VideoUrl", movie.VideoUrl ?? "");
+            cmd.Parameters.AddWithValue("@Genres", JsonSerializer.Serialize(movie.Genres ?? new()));
+            cmd.Parameters.AddWithValue("@Actors", JsonSerializer.Serialize(movie.Actors ?? new()));
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public static List<Movie> GetLocalHistory()
+        {
+            List<Movie> history = new();
+
+            using var connection = new SqliteConnection($"Data Source={DbPath}");
+            connection.Open();
+
+            string sql = "SELECT * FROM History ORDER BY Id DESC";
+
+            using var cmd = new SqliteCommand(sql, connection);
+            using var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                history.Add(new Movie
+                {
+                    Id = reader.GetInt32(0),
+                    Title = reader.GetString(1),
+                    Description = reader.GetString(2),
+                    Year = reader.GetInt32(3),
+                    Poster = reader.GetString(4),
+                    VideoUrl = reader.GetString(5),
+
+                    Genres = !reader.IsDBNull(6)
+                        ? JsonSerializer.Deserialize<List<Genre>>(reader.GetString(6)) ?? new()
+                        : new(),
+
+                    Actors = !reader.IsDBNull(7)
+                        ? JsonSerializer.Deserialize<List<Actor>>(reader.GetString(7)) ?? new()
+                        : new()
+                });
+            }
+
+            return history;
+        }
+
+        // =========================
+        // POSTERS (OFFLINE CACHE)
+        // =========================
+        public static void ApplyLocalPoster(Movie movie)
+        {
+            if (movie == null) return;
+
+            string localPath = PosterManager.GetLocalPoster(movie.Id);
+
+            if (!string.IsNullOrEmpty(localPath) && File.Exists(localPath))
+            {
+                movie.Poster = localPath;
+            }
+        }
+
+        // =========================
+        // USERS
+        // =========================
         public static void SaveUser(string username, string passwordHash)
         {
             using var connection = new SqliteConnection($"Data Source={DbPath}");
@@ -191,7 +244,6 @@ LIMIT 1;";
             string dbUsername = reader.GetString(0);
             string dbPasswordHash = reader.GetString(1);
 
-            // сравнение (пока упрощённо)
             if (dbPasswordHash == password)
                 return (dbUsername, dbPasswordHash);
 

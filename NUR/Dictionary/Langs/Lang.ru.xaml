@@ -13,6 +13,7 @@
     <system:String x:Key="SettingsBtn">Настройки</system:String>
     <system:String x:Key="ProfileBtn">Профиль</system:String>
     <system:String x:Key="FavoriteBtn">Избранное</system:String>
+    <system:String x:Key="HistoryBtn">История</system:String>
     <system:String x:Key="NewText">НОВИНКИ 2026</system:String>
     <system:String x:Key="Boevic">Боевик</system:String>
     <system:String x:Key="Comedy">Комедия</system:String>

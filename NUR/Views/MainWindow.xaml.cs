@@ -156,9 +156,7 @@ namespace NUR.Views
             ActorFilter.Items.Clear();
             YearFilter.Items.Clear();
 
-            // =======================
-            // ЖАНРЫ
-            // =======================
+
             GenreFilter.Items.Add("Все жанры");
 
             foreach (var genre in _allMoviesFromApi
@@ -174,9 +172,7 @@ namespace NUR.Views
 
             GenreFilter.SelectedIndex = 0;
 
-            // =======================
-            // АКТЁРЫ
-            // =======================
+
             ActorFilter.Items.Add("Все актёры");
 
             foreach (var actor in _allMoviesFromApi
@@ -314,11 +310,12 @@ namespace NUR.Views
                     case "Профиль":
                         ShowForm(userProfile);
                         break;
+                    case "История":
+                        ShowForm(historyForm);
+                        break;
                     case "Избранное":
-
                         favoritesForm.LoadFavorites();
                         ShowForm(favoritesForm);
-
                         break;
                 }
             }
@@ -333,6 +330,7 @@ namespace NUR.Views
             userProfile.Visibility = Visibility.Collapsed;
             searchResultsForm.Visibility = Visibility.Collapsed;
             favoritesForm.Visibility = Visibility.Collapsed;
+            historyForm.Visibility = Visibility.Collapsed;
 
             selectedForm.Visibility = Visibility.Visible;
         }

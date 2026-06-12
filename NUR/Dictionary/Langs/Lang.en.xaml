@@ -12,6 +12,7 @@
     <system:String x:Key="SettingsBtn">Settings</system:String>
     <system:String x:Key="ProfileBtn">Profile</system:String>
     <system:String x:Key="FavoriteBtn">Favorites</system:String>
+    <system:String x:Key="HistoryBtn">History</system:String>
     <system:String x:Key="NewText">NEW 2026</system:String>
     <system:String x:Key="Boevic">Action</system:String>
     <system:String x:Key="Comedy">Comedy</system:String>
