@@ -1,5 +1,6 @@
 ﻿using NUR.Data;
 using NUR.Models;
+using NUR.Services;
 using System.IO;
 using System.Net.Http.Json;
 using System.Windows;
@@ -116,7 +117,9 @@ namespace NUR.Views
             var mainWindow = Window.GetWindow(this) as MainWindow;
             if (mainWindow == null) return;
 
-            // ❗ МГНОВЕННЫЙ ОТКЛИК UI
+            // 🔥 ВОТ СЮДА ДОБАВЛЯЕМ ИСТОРИЮ
+            HistorySyncService.AddLocal(movie);
+
             BtnWatch.IsEnabled = false;
             BtnWatch.Content = "ЗАГРУЗКА...";
 
@@ -124,7 +127,6 @@ namespace NUR.Views
             {
                 bool isDownloaded = DownloadManager.IsDownloaded(movie.Id);
 
-                // ❗ СЛУЧАЙ 1: скачан → мгновенно играем
                 if (isDownloaded)
                 {
                     string localPath = DownloadManager.GetLocalPath(movie.Id);
@@ -134,39 +136,20 @@ namespace NUR.Views
                         mainWindow.StartPlayer(localPath);
                         return;
                     }
-                    else
-                    {
-                        MessageBox.Show("Файл поврежден. Скачайте заново.");
-                        return;
-                    }
                 }
-
-                // ❗ СЛУЧАЙ 2: не скачан → проверяем интернет
-                BtnWatch.Content = "ПРОВЕРКА СЕТИ...";
 
                 bool hasInternet = await InternetHelper.HasInternet();
 
                 if (!hasInternet)
                 {
-                    MessageBox.Show("Фильм не скачан. Подключитесь к интернету, чтобы смотреть онлайн.");
+                    MessageBox.Show("Фильм не скачан. Нет интернета.");
                     return;
                 }
 
-                // ❗ СЛУЧАЙ 3: онлайн просмотр
-                BtnWatch.Content = "ЗАПУСК...";
-
-                if (!string.IsNullOrEmpty(movie.VideoUrl))
-                {
-                    mainWindow.StartPlayer(movie.VideoUrl);
-                }
-                else
-                {
-                    MessageBox.Show("Ссылка на видео отсутствует.");
-                }
+                mainWindow.StartPlayer(movie.VideoUrl);
             }
             finally
             {
-                // ❗ ВСЕГДА возвращаем кнопку в норм состояние
                 BtnWatch.IsEnabled = true;
                 BtnWatch.Content = "СМОТРЕТЬ";
             }

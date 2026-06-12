@@ -8,7 +8,7 @@ namespace NUR.Data
     {
         private static readonly HttpClient _client = new HttpClient()
         {
-            Timeout = TimeSpan.FromSeconds(5)
+            Timeout = TimeSpan.FromSeconds(8)
         };
 
         public static string Token { get; set; }

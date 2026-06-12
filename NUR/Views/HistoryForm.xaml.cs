@@ -1,5 +1,6 @@
 ﻿using NUR.Data;
 using NUR.Models;
+using NUR.Services;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +15,13 @@ namespace NUR.Views
         {
             InitializeComponent();
             this.DataContext = this;
+
             Loaded += HistoryForm_Loaded;
+
+            HistorySyncService.HistoryChanged += async () =>
+            {
+                await Dispatcher.InvokeAsync(LoadHistory);
+            };
         }
 
         private async void HistoryForm_Loaded(object sender, RoutedEventArgs e)
@@ -26,16 +33,25 @@ namespace NUR.Views
         {
             try
             {
-                List<Movie> list;
+                List<Movie> list = new();
 
+                // =========================
+                // ONLINE → SYNC FIRST
+                // =========================
                 if (await InternetHelper.HasInternet())
                 {
-                    list = await HistoryService.GetHistory();
+                    var serverList = await HistoryService.GetHistory();
+
+                    foreach (var movie in serverList)
+                    {
+                        DatabaseService.SaveHistory(movie);
+                    }
                 }
-                else
-                {
-                    list = DatabaseService.GetLocalHistory();
-                }
+
+                // =========================
+                // ALWAYS LOAD LOCAL (SOURCE OF TRUTH)
+                // =========================
+                list = DatabaseService.GetLocalHistory();
 
                 History.Clear();
 
@@ -43,17 +59,16 @@ namespace NUR.Views
                 {
                     DatabaseService.ApplyLocalPoster(item);
                     History.Add(item);
-
                 }
 
                 emptyHistoryTxt.Visibility =
-                        History.Count == 0
-                            ? Visibility.Visible
-                            : Visibility.Collapsed;
+                    History.Count == 0
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Ошибка загрузки истории");
+                MessageBox.Show(ex.ToString());
             }
         }
 
