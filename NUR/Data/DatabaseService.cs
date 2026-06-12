@@ -42,6 +42,18 @@ CREATE TABLE IF NOT EXISTS History
     Actors TEXT
 );
 
+CREATE TABLE IF NOT EXISTS Favorites
+(
+    Id INTEGER PRIMARY KEY,
+    Title TEXT,
+    Description TEXT,
+    Year INTEGER,
+    PosterUrl TEXT,
+    VideoUrl TEXT,
+    Genres TEXT,
+    Actors TEXT
+);
+
 CREATE TABLE IF NOT EXISTS Users
 (
     Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -248,6 +260,64 @@ LIMIT 1;";
                 return (dbUsername, dbPasswordHash);
 
             return null;
+        }
+
+        public static void SaveFavorites(List<Movie> movies)
+        {
+            using var connection = new SqliteConnection($"Data Source={DbPath}");
+            connection.Open();
+
+            foreach (var movie in movies)
+            {
+                string sql = @"
+INSERT OR REPLACE INTO Favorites
+(Id, Title, Description, Year, PosterUrl, VideoUrl, Genres, Actors)
+VALUES
+(@Id, @Title, @Description, @Year, @PosterUrl, @VideoUrl, @Genres, @Actors)";
+
+                using var cmd = new SqliteCommand(sql, connection);
+
+                cmd.Parameters.AddWithValue("@Id", movie.Id);
+                cmd.Parameters.AddWithValue("@Title", movie.Title ?? "");
+                cmd.Parameters.AddWithValue("@Description", movie.Description ?? "");
+                cmd.Parameters.AddWithValue("@Year", movie.Year);
+                cmd.Parameters.AddWithValue("@PosterUrl", movie.Poster ?? "");
+                cmd.Parameters.AddWithValue("@VideoUrl", movie.VideoUrl ?? "");
+                cmd.Parameters.AddWithValue("@Genres", JsonSerializer.Serialize(movie.Genres ?? new()));
+                cmd.Parameters.AddWithValue("@Actors", JsonSerializer.Serialize(movie.Actors ?? new()));
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static List<Movie> GetLocalFavorites()
+        {
+            List<Movie> list = new();
+
+            using var connection = new SqliteConnection($"Data Source={DbPath}");
+            connection.Open();
+
+            string sql = "SELECT * FROM Favorites";
+
+            using var cmd = new SqliteCommand(sql, connection);
+            using var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                list.Add(new Movie
+                {
+                    Id = reader.GetInt32(0),
+                    Title = reader.GetString(1),
+                    Description = reader.GetString(2),
+                    Year = reader.GetInt32(3),
+                    Poster = reader.GetString(4),
+                    VideoUrl = reader.GetString(5),
+                    Genres = JsonSerializer.Deserialize<List<Genre>>(reader.GetString(6)) ?? new(),
+                    Actors = JsonSerializer.Deserialize<List<Actor>>(reader.GetString(7)) ?? new()
+                });
+            }
+
+            return list;
         }
     }
 }

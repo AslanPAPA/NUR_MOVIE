@@ -382,7 +382,7 @@ namespace NUR.Views
 
         public void RefreshFavorites()
 {
-    favoritesForm.LoadFavorites();
+        favoritesForm.LoadFavorites();
 }
 
         private void SearchTimer_Tick(object? sender, EventArgs e)
