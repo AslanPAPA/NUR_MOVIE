@@ -323,6 +323,11 @@ namespace NUR.Views
 
         internal void ShowForm(UIElement selectedForm)
         {
+            if (selectedForm != videoForm)
+            {
+                videoForm.player?.Pause();
+            }
+
             homeForm.Visibility = Visibility.Collapsed;
             videoForm.Visibility = Visibility.Collapsed;
             settingsForm.Visibility = Visibility.Collapsed;
