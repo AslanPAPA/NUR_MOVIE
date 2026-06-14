@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using NUR.Data;
+using System.IO;
 
 namespace NUR.Views
 {
@@ -40,6 +42,48 @@ namespace NUR.Views
 
             Properties.Settings.Default.VideoSpeed = item.Content.ToString();
             Properties.Settings.Default.Save();
+        }
+
+        private void ClearCache_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string downloadsPath =
+                    Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        "Downloads");
+
+                if (!Directory.Exists(downloadsPath))
+                {
+                    MessageBox.Show("Кэш уже пуст.");
+                    return;
+                }
+
+                long totalBytes = 0;
+
+                var files = Directory.GetFiles(
+                    downloadsPath,
+                    "*",
+                    SearchOption.AllDirectories);
+
+                foreach (var file in files)
+                {
+                    FileInfo info = new FileInfo(file);
+                    totalBytes += info.Length;
+                }
+
+                double totalGb =
+                    totalBytes / 1024d / 1024d / 1024d;
+
+                Directory.Delete(downloadsPath, true);
+
+                MessageBox.Show(
+                    $"Кэш очищен!\nУдалено: {totalGb:F2} GB");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка очистки: {ex.Message}");
+            }
         }
     }
 }
