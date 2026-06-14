@@ -234,18 +234,22 @@ VALUES (@Username, @PasswordHash);";
             cmd.ExecuteNonQuery();
         }
 
-        public static (string Username, string PasswordHash)? GetUser(string username, string password)
+        public static (string Username, string PasswordHash)?
+            GetUser(string username, string password)
         {
-            using var connection = new SqliteConnection($"Data Source={DbPath}");
+            using var connection =
+                new SqliteConnection($"Data Source={DbPath}");
+
             connection.Open();
 
             string sql = @"
-SELECT Username, PasswordHash 
-FROM Users 
+SELECT Username, PasswordHash
+FROM Users
 WHERE Username = @Username
 LIMIT 1;";
 
             using var cmd = new SqliteCommand(sql, connection);
+
             cmd.Parameters.AddWithValue("@Username", username);
 
             using var reader = cmd.ExecuteReader();
@@ -256,7 +260,12 @@ LIMIT 1;";
             string dbUsername = reader.GetString(0);
             string dbPasswordHash = reader.GetString(1);
 
-            if (dbPasswordHash == password)
+            bool verified =
+                PasswordHelper.VerifyPassword(
+                    password,
+                    dbPasswordHash);
+
+            if (verified)
                 return (dbUsername, dbPasswordHash);
 
             return null;

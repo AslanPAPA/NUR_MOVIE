@@ -33,6 +33,7 @@ namespace NUR.Views
 
                     mediaPlayerHost.Player.BufferingStarted += Player_BufferingStarted;
                     mediaPlayerHost.Player.BufferingCompleted += Player_BufferingCompleted;
+
                 }
                 catch (Exception ex)
                 {
@@ -62,9 +63,34 @@ namespace NUR.Views
             if (!string.IsNullOrEmpty(videoUrl) && player != null)
             {
                 player.OpenAsync(videoUrl);
+                ApplySavedSpeed();
                 navContainer.IsEnabled = true;
                 this.Focus();
             }
+        }
+
+        private void ApplySavedSpeed()
+        {
+            if (player == null)
+                return;
+
+            string speed =
+                Properties.Settings.Default.VideoSpeed;
+
+            double rate = speed switch
+            {
+                "0.5x" => 0.5,
+                "0.75x" => 0.75,
+                "1x" => 1.0,
+                "1.25x" => 1.25,
+                "1.5x" => 1.5,
+                "2x" => 2.0,
+                _ => 1.0
+            };
+
+            player.Speed = rate;
+
+            btnVideoSpeed.Content = speed;
         }
 
         private void VideoForm_Unloaded(object sender, RoutedEventArgs e)

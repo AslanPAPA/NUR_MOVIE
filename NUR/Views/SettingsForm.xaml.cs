@@ -15,7 +15,6 @@ namespace NUR.Views
 
         private void settingsFrom_Loaded(object sender, RoutedEventArgs e)
         {
-            // ставим флаг, что идёт загрузка
             _isLoaded = false;
 
             foreach (ComboBoxItem item in videoSPeedBox.Items)
@@ -27,13 +26,11 @@ namespace NUR.Views
                 }
             }
 
-            // загрузка закончена → можно реагировать на изменения
             _isLoaded = true;
         }
 
         private void videoSPeedBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // игнорируем событие во время загрузки
             if (!_isLoaded)
                 return;
 

@@ -62,7 +62,6 @@ namespace NUR.Views
             var movie = DataContext as Movie;
             if (movie == null) return;
 
-            // ❗ МГНОВЕННЫЙ ОТКЛИК UI
             BtnDownload.IsEnabled = false;
             BtnDownload.Content = "ПРОВЕРКА...";
 
@@ -94,7 +93,6 @@ namespace NUR.Views
             }
             finally
             {
-                // ❗ ВСЕГДА возвращаем кнопку в норм состояние
                 UpdateDownloadButton();
             }
         }
@@ -117,8 +115,6 @@ namespace NUR.Views
             var mainWindow = Window.GetWindow(this) as MainWindow;
             if (mainWindow == null) return;
 
-            // 🔥 ВОТ СЮДА ДОБАВЛЯЕМ ИСТОРИЮ
-            HistorySyncService.AddLocal(movie);
 
             BtnWatch.IsEnabled = false;
             BtnWatch.Content = "ЗАГРУЗКА...";
@@ -147,6 +143,8 @@ namespace NUR.Views
                 }
 
                 mainWindow.StartPlayer(movie.VideoUrl);
+                HistorySyncService.AddLocal(movie);
+
             }
             finally
             {

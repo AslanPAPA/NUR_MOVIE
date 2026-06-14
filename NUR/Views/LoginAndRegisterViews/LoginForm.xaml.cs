@@ -93,7 +93,10 @@ namespace NUR.Views.LoginAndRegisterViews
                     ApiClient.SetToken(loginResponse.token, loginResponse.username);
 
                     UserSession.Username = loginResponse.username;
-                    DatabaseService.SaveUser(username, password);
+                    string hash =
+                    PasswordHelper.HashPassword(password);
+
+                    DatabaseService.SaveUser(username, hash);
                     MessageBox.Show("Успешный вход!");
 
                     MainWindow mainWin = new MainWindow();
