@@ -45,7 +45,7 @@
                     Width="110"
                     HorizontalAlignment="Left"
                     Click="BtnCatalog_Click"
-                    Content="⋮ Каталог"
+                    Content="{DynamicResource CatalogBtn}"
                     FontSize="15"
                     FontWeight="DemiBold"
                     Style="{StaticResource ButtonRoundStyle}" />
@@ -186,6 +186,7 @@
                     Button.Click="MenuButton_Click"
                     Orientation="Horizontal">
                     <Button
+                        x:Name="BtnHome"
                         Width="110"
                         Content="{DynamicResource MainBtn}"
                         FontSize="15"
@@ -195,6 +196,7 @@
 
 
                     <Button
+                        x:Name="BtnSettings"
                         Width="110"
                         Content="{DynamicResource SettingsBtn}"
                         FontSize="15"
@@ -202,6 +204,7 @@
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
                     <Button
+                        x:Name="BtnProfile"
                         Width="110"
                         Content="{DynamicResource ProfileBtn}"
                         FontSize="15"
@@ -209,6 +212,7 @@
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
                     <Button
+                        x:Name="BtnFavorites"
                         Width="110"
                         Content="{DynamicResource FavoriteBtn}"
                         FontSize="15"
@@ -216,6 +220,7 @@
                         Foreground="White"
                         Style="{StaticResource ButtonRoundStyle}" />
                     <Button
+                        x:Name="BtnHistory"
                         Width="110"
                         Content="{DynamicResource HistoryBtn}"
                         FontSize="15"

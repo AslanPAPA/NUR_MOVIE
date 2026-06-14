@@ -19,6 +19,21 @@ namespace NUR.Views
         {
             _isLoaded = false;
 
+            // восстановление языка
+            string savedLang = Properties.Settings.Default.Language;
+
+            foreach (ComboBoxItem item in comboLang.Items)
+            {
+                if (item.Content.ToString() == savedLang)
+                {
+                    comboLang.SelectedItem = item;
+                    break;
+                }
+            }
+
+            SwitchLanguage(savedLang);
+
+            // восстановление скорости (твоя логика)
             foreach (ComboBoxItem item in videoSPeedBox.Items)
             {
                 if (item.Content.ToString() == Properties.Settings.Default.VideoSpeed)
@@ -84,6 +99,47 @@ namespace NUR.Views
             {
                 MessageBox.Show($"Ошибка очистки: {ex.Message}");
             }
+        }
+
+        private void comboLang_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_isLoaded)
+                return;
+
+            var item = comboLang.SelectedItem as ComboBoxItem;
+            if (item == null)
+                return;
+
+            string lang = item.Content.ToString();
+
+            Properties.Settings.Default.Language = lang;
+            Properties.Settings.Default.Save();
+
+            SwitchLanguage(lang);
+        }
+
+        private void SwitchLanguage(string lang)
+        {
+            string dictPath = lang switch
+            {
+                "Русский" => "Dictionary/Langs/Lang.ru.xaml",
+                "Английский" => "Dictionary/Langs/Lang.en.xaml",
+                _ => "Dictionary/Langs/Lang.ru.xaml"
+            };
+
+            var dict = new ResourceDictionary
+            {
+                Source = new Uri(dictPath, UriKind.Relative)
+            };
+
+            var oldDict = Application.Current.Resources.MergedDictionaries
+                .FirstOrDefault(d => d.Source != null &&
+                                     d.Source.OriginalString.Contains("Dictionary/Langs/"));
+
+            if (oldDict != null)
+                Application.Current.Resources.MergedDictionaries.Remove(oldDict);
+
+            Application.Current.Resources.MergedDictionaries.Add(dict);
         }
     }
 }

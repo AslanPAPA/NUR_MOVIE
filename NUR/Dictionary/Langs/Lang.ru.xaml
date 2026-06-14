@@ -30,6 +30,7 @@
     <system:String x:Key="WatchOfflineBtn">СМОТРЕТЬ ОФФЛАЙН</system:String>
     <system:String x:Key="VideoStep">Время перемотки</system:String>
     <system:String x:Key="VideoStepDesc">Время для перемотки видео</system:String>
+    <system:String x:Key="CatalogBtn">⋮ Каталог</system:String>
 
 
 </ResourceDictionary>

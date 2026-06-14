@@ -294,26 +294,25 @@ namespace NUR.Views
         {
             if (e.OriginalSource is Button clickedButton)
             {
-                string buttonText = clickedButton.Content.ToString();
-
-                switch (buttonText)
+                switch (clickedButton.Name)
                 {
-                    case "Главная":
+                    case "BtnHome":
                         ShowForm(homeForm);
                         break;
-                    case "Видеоплеер":
-                        ShowForm(videoForm);
-                        break;
-                    case "Настройки":
+
+                    case "BtnSettings":
                         ShowForm(settingsForm);
                         break;
-                    case "Профиль":
+
+                    case "BtnProfile":
                         ShowForm(userProfile);
                         break;
-                    case "История":
+
+                    case "BtnHistory":
                         ShowForm(historyForm);
                         break;
-                    case "Избранное":
+
+                    case "BtnFavorites":
                         favoritesForm.LoadFavorites();
                         ShowForm(favoritesForm);
                         break;

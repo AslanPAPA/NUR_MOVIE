@@ -88,7 +88,7 @@
                     </StackPanel>
 
                     <ComboBox
-                        x:Name="ComboSkwsipTime"
+                        x:Name="comboLang"
                         Grid.Column="1"
                         Width="100"
                         Height="35"
@@ -96,6 +96,7 @@
                         VerticalContentAlignment="Center"
                         FontSize="14"
                         SelectedIndex="1"
+                          SelectionChanged="comboLang_SelectionChanged"
                         Style="{DynamicResource ComboBox}">
                         <ComboBoxItem Content="Английский" />
                         <ComboBoxItem Content="Русский" />
@@ -142,16 +143,16 @@
                         <ComboBoxItem Content="1.25x" />
                         <ComboBoxItem Content="1.5x" />
                         <ComboBoxItem Content="2x" />
-                        
+
                     </ComboBox>
-                   
+
                 </Grid>
             </Border>
             <Border
-    Margin="0,0,0,20"
-    Padding="20"
-    Background="#1F2020"
-    CornerRadius="10">
+                Margin="0,0,0,20"
+                Padding="20"
+                Background="#1F2020"
+                CornerRadius="10">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -161,25 +162,25 @@
 
                     <StackPanel Grid.Column="0" VerticalAlignment="Center">
                         <TextBlock
-                FontSize="16"
-                FontWeight="SemiBold"
-                Foreground="White"
-                Text="Очистка кэша" />
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Text="Очистка кэша" />
 
                         <TextBlock
-                Margin="0,5,0,0"
-                FontSize="12"
-                Foreground="Gray"
-                Text="Удалить все скачанные фильмы" />
+                            Margin="0,5,0,0"
+                            FontSize="12"
+                            Foreground="Gray"
+                            Text="Удалить все скачанные фильмы" />
                     </StackPanel>
 
                     <Button
-            Grid.Column="1"
-            Width="140"
-            Height="40"
-            Content="ОЧИСТИТЬ"
-            Click="ClearCache_Click"
-                Style="{StaticResource DangerButton}"/>
+                        Grid.Column="1"
+                        Width="140"
+                        Height="40"
+                        Click="ClearCache_Click"
+                        Content="ОЧИСТИТЬ"
+                        Style="{StaticResource DangerButton}" />
                 </Grid>
             </Border>
 

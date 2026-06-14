@@ -29,6 +29,7 @@
     <system:String x:Key="VideoStep">Video rewind step</system:String>
     <system:String x:Key="VideoStepDesc">Select skip time</system:String>
     <system:String x:Key="DownloadedText">MOVIE DOWNLOADED</system:String>
+    <system:String x:Key="CatalogBtn">⋮ Catalog</system:String>
 
 
 </ResourceDictionary>
