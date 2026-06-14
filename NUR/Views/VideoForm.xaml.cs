@@ -12,6 +12,7 @@ namespace NUR.Views
     {
         public Player player { get; set; }
         private Config playerConfig;
+        private string currentVideoUrl;
         private TimeSpan lastPosition = TimeSpan.Zero;
 
         public VideoForm()
@@ -59,13 +60,24 @@ namespace NUR.Views
 
         public void mediaStart(string videoUrl)
         {
-            if (!string.IsNullOrEmpty(videoUrl) && player != null)
+            if (string.IsNullOrEmpty(videoUrl) || player == null)
+                return;
+
+            if (currentVideoUrl == videoUrl)
             {
-                player.OpenAsync(videoUrl);
-                ApplySavedSpeed();
-                navContainer.IsEnabled = true;
-                this.Focus();
+                player.Play();
+                return;
             }
+
+            currentVideoUrl = videoUrl;
+
+            player.OpenAsync(videoUrl);
+
+            ApplySavedSpeed();
+
+            navContainer.IsEnabled = true;
+
+            this.Focus();
         }
 
         private void ApplySavedSpeed()
