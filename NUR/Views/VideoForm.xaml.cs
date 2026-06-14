@@ -214,10 +214,6 @@ namespace NUR.Views
 
             btnVideoSpeed.Content = nextSpeed;
 
-            Properties.Settings.Default.VideoSpeed =
-                nextSpeed;
-
-            Properties.Settings.Default.Save();
         }
     }
 }
