@@ -180,6 +180,21 @@
                            
 
                             <Button
+                                x:Name="btnVideoSpeed"
+                                Grid.Column="2"
+                                Width="35"
+                                Height="35"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="btnVideoSpeed_Click"
+                                Content="1x"
+                                Cursor="Hand"
+                                FontSize="12"
+                                Foreground="White"
+                                Style="{DynamicResource RoundMediaButtonStyle}" />
+
+
+                            <Button
                                 x:Name="btnFullScreen"
                                 Grid.Column="2"
                                 Width="35"

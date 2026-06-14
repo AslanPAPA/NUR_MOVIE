@@ -128,20 +128,23 @@
                     </StackPanel>
 
                     <ComboBox
-                        x:Name="ComboSkwsipwTime"
+                        x:Name="videoSPeedBox"
                         Grid.Column="1"
                         Width="100"
                         Height="35"
-                   
                         FontSize="14"
-                        SelectedIndex="1"
+                        SelectedIndex="2"
+                        SelectionChanged="videoSPeedBox_SelectionChanged"
                         Style="{DynamicResource ComboBox}">
-                        <ComboBoxItem 
-                            Content="0.5x" />
+                        <ComboBoxItem Content="0.5x" />
+                        <ComboBoxItem Content="0.75x" />
                         <ComboBoxItem Content="1x" />
+                        <ComboBoxItem Content="1.25x" />
                         <ComboBoxItem Content="1.5x" />
                         <ComboBoxItem Content="2x" />
+                        
                     </ComboBox>
+                   
                 </Grid>
             </Border>
 

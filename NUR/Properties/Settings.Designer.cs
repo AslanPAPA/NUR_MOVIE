@@ -46,5 +46,17 @@ namespace NUR.Properties {
                 this["Username"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string VideoSpeed {
+            get {
+                return ((string)(this["VideoSpeed"]));
+            }
+            set {
+                this["VideoSpeed"] = value;
+            }
+        }
     }
 }

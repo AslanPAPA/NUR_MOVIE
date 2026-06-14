@@ -140,5 +140,10 @@ namespace NUR.Views
             var mainWindow = Window.GetWindow(this) as MainWindow;
             mainWindow?.ShowForm(mainWindow.movieDetailForm);
         }
+
+        private void btnVideoSpeed_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
