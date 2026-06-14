@@ -62,6 +62,14 @@ namespace NUR.Views.LoginAndRegisterViews
                     return;
                 }
 
+                bool isPwned = await PwnedPasswordChecker.IsPasswordPwned(password);
+
+                if (isPwned)
+                {
+                    MessageBox.Show("Этот пароль был в утечках. Выберите другой.");
+                    return;
+                }
+
                 var registerData = new
                 {
                     username = username,

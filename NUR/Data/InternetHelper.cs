@@ -1,33 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace NUR.Data
+public static class InternetHelper
 {
-    public static class InternetHelper
+    private static readonly HttpClient client = new()
     {
+        Timeout = TimeSpan.FromSeconds(8)
+    };
 
+    private static readonly string[] Urls =
+    {
+        "https://clients3.google.com/generate_204",
+        "https://www.msftconnecttest.com/connecttest.txt",
+        "https://1.1.1.1"
+    };
 
-        public static async Task<bool> HasInternet()
+    public static async Task<bool> HasInternet()
+    {
+        foreach (var url in Urls)
         {
             try
             {
-                using HttpClient client = new();
+                using var request = new HttpRequestMessage(HttpMethod.Head, url);
 
-                client.Timeout = TimeSpan.FromSeconds(3);
+                using var response = await client.SendAsync(request);
 
-                await client.GetAsync(
-                    "http://185.246.222.35:8080/api/movies/");
-
-                return true;
+                if (response.IsSuccessStatusCode)
+                    return true;
             }
             catch
             {
-                return false;
             }
         }
 
-
+        return false;
     }
 }
