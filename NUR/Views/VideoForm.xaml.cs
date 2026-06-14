@@ -168,7 +168,56 @@ namespace NUR.Views
 
         private void btnVideoSpeed_Click(object sender, RoutedEventArgs e)
         {
+            if (player == null)
+                return;
 
+            string current =
+                btnVideoSpeed.Content?.ToString() ?? "1x";
+
+            string nextSpeed;
+            double rate;
+
+            switch (current)
+            {
+                case "0.5x":
+                    nextSpeed = "0.75x";
+                    rate = 0.75;
+                    break;
+
+                case "0.75x":
+                    nextSpeed = "1x";
+                    rate = 1.0;
+                    break;
+
+                case "1x":
+                    nextSpeed = "1.25x";
+                    rate = 1.25;
+                    break;
+
+                case "1.25x":
+                    nextSpeed = "1.5x";
+                    rate = 1.5;
+                    break;
+
+                case "1.5x":
+                    nextSpeed = "2x";
+                    rate = 2.0;
+                    break;
+
+                default:
+                    nextSpeed = "0.5x";
+                    rate = 0.5;
+                    break;
+            }
+
+            player.Speed = rate;
+
+            btnVideoSpeed.Content = nextSpeed;
+
+            Properties.Settings.Default.VideoSpeed =
+                nextSpeed;
+
+            Properties.Settings.Default.Save();
         }
     }
 }
