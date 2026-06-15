@@ -12,6 +12,8 @@
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
+    ShowInTaskbar="True"
+    Icon="/Assets/images/nur_logo.ico"
     mc:Ignorable="d">
 
     <Grid Background="{DynamicResource GridBackground}" MouseDown="Grid_MouseDown">

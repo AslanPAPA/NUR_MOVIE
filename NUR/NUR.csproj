@@ -11,9 +11,10 @@
 
   <ItemGroup>
     <None Remove="Assets\images\filters.png" />
-    <None Remove="Assets\images\full_heart.png" />
     <None Remove="Assets\images\logo.png" />
     <None Remove="Assets\images\no_full_heart.png" />
+    <None Remove="Assets\images\nur_logo.ico" />
+    <None Remove="Assets\images\nur_logo.png" />
     <None Remove="Assets\images\search.png" />
   </ItemGroup>
 
@@ -29,13 +30,16 @@
     <Resource Include="Assets\images\filters.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\images\full_heart.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Assets\images\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\images\no_full_heart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\nur_logo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\nur_logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\images\search.png">

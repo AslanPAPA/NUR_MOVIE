@@ -13,6 +13,7 @@ namespace NUR.Views
         public Player player { get; set; }
         private Config playerConfig;
         private string currentVideoUrl;
+        
         private TimeSpan lastPosition = TimeSpan.Zero;
 
         public VideoForm()
