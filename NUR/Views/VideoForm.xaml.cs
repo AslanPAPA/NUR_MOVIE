@@ -20,7 +20,12 @@ namespace NUR.Views
         {
             InitializeComponent();
             this.Loaded += VideoForm_Loaded;
+
+            this.Focusable = true;
+            this.KeyDown += VideoForm_KeyDown;
         }
+
+       
 
         private void VideoForm_Loaded(object sender, RoutedEventArgs e)
         {
@@ -40,6 +45,34 @@ namespace NUR.Views
                 {
                     MessageBox.Show($"Ошибка {ex.Message}");
                 }   
+            }
+        }
+
+        private void VideoForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (player == null)
+                return;
+
+            string skip =
+                Properties.Settings.Default.SkipTime;
+
+            int seconds = skip switch
+            {
+                "5 сек" => 5,
+                "10 сек" => 10,
+                "15 сек" => 15,
+                _ => 10
+            };
+
+            long offset = seconds * 1000L * 10000L;
+
+            if (e.Key == Key.Right)
+            {
+                player.SeekForward_(offset);
+            }
+            else if (e.Key == Key.Left)
+            {
+                player.SeekBackward_(offset);
             }
         }
         private void Player_BufferingStarted(object sender, EventArgs e)

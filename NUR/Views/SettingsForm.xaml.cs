@@ -43,6 +43,16 @@ namespace NUR.Views
                 }
             }
 
+            foreach (ComboBoxItem item in ComboSkipTime.Items)
+            {
+                if (item.Content.ToString() ==
+                    Properties.Settings.Default.SkipTime)
+                {
+                    ComboSkipTime.SelectedItem = item;
+                    break;
+                }
+            }
+
             _isLoaded = true;
         }
 
@@ -140,6 +150,24 @@ namespace NUR.Views
                 Application.Current.Resources.MergedDictionaries.Remove(oldDict);
 
             Application.Current.Resources.MergedDictionaries.Add(dict);
+        }
+
+        private void ComboSkipTime_SelectionChanged(
+    object sender,
+    SelectionChangedEventArgs e)
+        {
+            if (!_isLoaded)
+                return;
+
+            var item = ComboSkipTime.SelectedItem as ComboBoxItem;
+
+            if (item == null)
+                return;
+
+            Properties.Settings.Default.SkipTime =
+                item.Content.ToString();
+
+            Properties.Settings.Default.Save();
         }
     }
 }

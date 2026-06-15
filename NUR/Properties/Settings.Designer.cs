@@ -70,5 +70,17 @@ namespace NUR.Properties {
                 this["Language"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SkipTime {
+            get {
+                return ((string)(this["SkipTime"]));
+            }
+            set {
+                this["SkipTime"] = value;
+            }
+        }
     }
 }

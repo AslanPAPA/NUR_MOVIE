@@ -55,7 +55,8 @@
                         VerticalContentAlignment="Center"
                         FontSize="14"
                         SelectedIndex="1"
-                        Style="{DynamicResource ComboBox}">
+                        Style="{DynamicResource ComboBox}"
+                        SelectionChanged="ComboSkipTime_SelectionChanged">
                         <ComboBoxItem Content="5 сек" />
                         <ComboBoxItem Content="10 сек" />
                         <ComboBoxItem Content="15 сек" />
