@@ -36,6 +36,7 @@ namespace NUR.Views
                     playerConfig = new Config();
                     player = new Player(playerConfig);
                     mediaPlayerHost.Player = player;
+                    playerConfig.Player.SeekAccurate = true;
 
                     mediaPlayerHost.Player.BufferingStarted += Player_BufferingStarted;
                     mediaPlayerHost.Player.BufferingCompleted += Player_BufferingCompleted;
